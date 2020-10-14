@@ -1,9 +1,11 @@
 <div class="weather-component" *ngIf="weather; else elseBlock">
     <div class="top">
         <span>+</span>
-        <h4>{{city}}</h4>
+        <h3>{{city}}<br><p>{{weatherService.getTime()}}</p></h3>
         <span>..</span>
     </div>
+    <AutocompleteComponent></AutocompleteComponent>
+    <div class="middle">
     <div class="first-page">
         <div class="temp">
             <img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'> 
@@ -16,8 +18,11 @@
         <div><span><img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'></span> Today . {{daily[0].weather[0].main}} . {{daily[0].temp.max}}&deg; / {{daily[0].temp.min}}&deg;</div>
         <div><span><img src='https://openweathermap.org/img/wn/{{tomorrowIcon}}@2x.png'></span> Tomorrow .  {{daily[1].weather[0].main}} . {{daily[1].temp.max}}&deg; / {{daily[1].temp.min}}&deg;</div>
         <div><span><img src='https://openweathermap.org/img/wn/{{nextDayIcon}}@2x.png'></span> Next Day .  {{daily[2].weather[0].main}} . {{daily[2].temp.max}}&deg; / {{daily[2].temp.min}}&deg;</div>
+        <div class="forecast-btn-place">
+            <div class="weekly-forecast-btn">7 days forecast</div>
+        </div>
     </div>
-
+</div>
     <!-- <input type="text" (keyup)="search(this.$event)" placeholder="Enter City Name" (value)="city" required> -->
 
     <!-- <input type="text" #default [placeholder]="placeholder"><button (click)="defaultCity()">Save</button> -->
@@ -27,3 +32,4 @@
         Loading ...
     </div>
 </ng-template>
+<div></div>

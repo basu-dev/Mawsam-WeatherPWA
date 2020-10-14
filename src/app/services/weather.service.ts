@@ -8,9 +8,12 @@ import { OneWeather } from '../model/weather';
 export class WeatherService {
   APP_ID = '2f111e4b3f03c4f196c708bc43c33f8b';
   weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
+  cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
+  MY_API = 'AIzaSyCJ67H5QBLVTdO2pnmEmC2THDx95rWyC1g';
   lat = null;
   lon = null;
   geoTaken = false;
+  public weatherData:OneWeather=null;
   constructor(public httpClient: HttpClient) {}
   private getGeolocation(): boolean {
     if (!this.geoTaken && navigator.geolocation) {
@@ -28,7 +31,7 @@ export class WeatherService {
   get(city: string): Observable<OneWeather> {
     this.lat = (27.71).toString();
     this.lon = (85.32).toString();
-    return this.httpClient
+    let result = this.httpClient
       .get<OneWeather>(this.weatherUrl, {
         params: {
           lat: this.lat,
@@ -39,6 +42,19 @@ export class WeatherService {
         },
       })
       .pipe(catchError(this.handleError<OneWeather>('get', {})));
+      let subsc = result.subscribe(data=>this.weatherData = data);;
+    return result;
+
+  }
+  getTime(): string {
+    let a: Date = new Date();
+    let hours = a.getHours();
+    let sit = 'AM';
+    if (hours > 12) {
+      hours = hours - 12;
+      sit = 'PM';
+    }
+    return `${hours}:${a.getMinutes()} ${sit}`;
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -1,32 +1,22 @@
 
 .weather-component{
-    height:100vh;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    min-height:100vh;
     width:100%;
     text-align: center;
     color:white;
-
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#63b6db+0,309dcf+100;Blue+3D+%234 */
-background: #63b6db; /* Old browsers */
-background: -moz-linear-gradient(left,  #63b6db 0%, #309dcf 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left,  #63b6db 0%,#309dcf 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right,  #48b6e9 0%,#249dd5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', endColorstr='#309dcf',GradientType=1 ); /* IE6-9 */
+    padding-top:50px;
 }
-.top,.first-page{
-    display:flex;
-    align-items: center;
-}
-.top{
-    position:fixed;
-    height:50px;
-    width: 100%;
-    padding:15px 35px;
-
-    justify-content: space-between;
-    color:white;
-}
-.top span{
-    font-size:1.7rem;
+@media (max-width:768px){
+    .weather-component{
+        display: block;
+        
+    }
+    AutocompleteComponent{
+        position: absolute;
+        left:-100%;
+    }
 }
 .title{
     font-size:1.2rem;
@@ -68,5 +58,22 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', end
     margin-top:10px;
     height:30px;
     
+    
+}
+.forecast-btn-place{
+    padding-top:20px;
+    display:flex;
+    justify-content: center;
+}
+.weekly-forecast-btn{
+    width:300px;
+    height:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:40px;
+    background:#00000040;
+    margin:0;
+    cursor: pointer;
     
 }
