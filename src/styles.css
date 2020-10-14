@@ -4,10 +4,10 @@
     box-sizing:border-box;
 }
 @import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&display=swap');
-/* :root{
+:root{
     --primary-font:'Verdana';
     --secondary-font:'Big Shoulders Text';
-} */
+}
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
