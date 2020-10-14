@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template:  `<selector-weather></selector-weather>`
+  template:  `<app-weather></app-weather>`
 })
 export class AppComponent {
   title = 'WeatherPWA';

@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&display=swap');
+/* :root{
+    --primary-font:'Verdana';
+    --secondary-font:'Big Shoulders Text';
+} */
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

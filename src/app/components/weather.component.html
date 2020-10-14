@@ -1,0 +1,19 @@
+<div class="weather-component">
+    <div class="top">
+        <span>+</span>
+        <h4>{{weather.city}}</h4>
+        <span>Menu</span>
+    </div>
+    <div class="first-page">
+        <div class="temp">
+            {{weather.temp | number : '1.0-0' }}
+            <span>&deg; C</span>
+            <div>{{weather.main}}</div>
+        </div>
+        <div class="description">
+        </div>
+    </div>
+    <!-- <input type="text" (keyup)="search(this.$event)" placeholder="Enter City Name" (value)="city" required> -->
+     
+    <!-- <input type="text" #default [placeholder]="placeholder"><button (click)="defaultCity()">Save</button> -->
+</div>

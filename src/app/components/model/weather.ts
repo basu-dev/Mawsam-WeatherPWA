@@ -12,3 +12,10 @@ export interface Weather{
     icon?:string,
     description?:string
 }
+export interface OneWeather{
+    current?:Weather,
+    hourly?:Weather[],
+    daily?:Weather[]
+
+
+}

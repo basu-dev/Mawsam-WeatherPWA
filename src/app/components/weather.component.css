@@ -1,0 +1,54 @@
+
+.weather-component{
+    height:100vh;
+    width:100%;
+    text-align: center;
+    color:white;
+
+/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#63b6db+0,309dcf+100;Blue+3D+%234 */
+background: #63b6db; /* Old browsers */
+background: -moz-linear-gradient(left,  #63b6db 0%, #309dcf 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left,  #63b6db 0%,#309dcf 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right,  #63b6db 0%,#309dcf 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', endColorstr='#309dcf',GradientType=1 ); /* IE6-9 */
+}
+.top,.first-page{
+    display:flex;
+    align-items: center;
+}
+.top{
+    position:fixed;
+    height:50px;
+    width: 100%;
+    padding:15px;
+    justify-content: space-between;
+    color:white;
+}
+.title{
+    font-size:1.2rem;
+}
+.first-page{
+    height:70vh;
+    position:relative;
+    justify-content: center;
+    font-size:90px;
+    /* font-weight: bold; */
+}
+.temp{
+    /* font-family: var(--secondary-font); */
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+.temp span{
+    font-size:20px;
+    position:absolute;
+    top:0;
+    display:block;
+    left:100%;
+    width:50px;
+}
+.temp div{
+    font-size:20px;
+}

@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { WeatherComponent } from './components/weather.component';
 import { WeatherService } from './services/weather.service';
+import { CityComponent } from './components/city.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WeatherComponent
+    WeatherComponent,
+    CityComponent
   ],
   imports: [
     BrowserModule,
