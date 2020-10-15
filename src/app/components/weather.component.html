@@ -1,33 +1,43 @@
 <div class="weather-component" *ngIf="weather; else elseBlock">
     <div class="top">
         <span>+</span>
-        <h3>{{city}}<br><p>{{weatherService.getTime()}}</p></h3>
+        <div class="name"><h3>{{city}}<br>
+            <p>{{weatherService.getTime()}}</p></h3>
+            <div (click)="addCity()" class="plus-button"></div>
+        </div>
         <span>..</span>
     </div>
-    <div class="middle">
+
     <div class="first-page">
         <div class="temp">
-            <img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'> 
-            {{weather.temp | number : '1.0-0' }}
-            <span>&deg; C</span>
-            <div>{{weather.weather[0].main}}</div>
+            <img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'>
+            <div class="temperature">
+                {{weather.temp | number : '1.0-0' }}
+                <span>&deg; C</span>
+            </div>
+            <div class="status">{{weather.weather[0].main}}</div>
         </div>
     </div>
     <div class="description">
-        <div><span><img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'></span> Today . {{daily[0].weather[0].main}} . {{daily[0].temp.max}}&deg; / {{daily[0].temp.min}}&deg;</div>
-        <div><span><img src='https://openweathermap.org/img/wn/{{tomorrowIcon}}@2x.png'></span> Tomorrow .  {{daily[1].weather[0].main}} . {{daily[1].temp.max}}&deg; / {{daily[1].temp.min}}&deg;</div>
-        <div><span><img src='https://openweathermap.org/img/wn/{{nextDayIcon}}@2x.png'></span> Next Day .  {{daily[2].weather[0].main}} . {{daily[2].temp.max}}&deg; / {{daily[2].temp.min}}&deg;</div>
-        <div class="forecast-btn-place">
-            <div class="weekly-forecast-btn">7 days forecast</div>
-        </div>
+        <div><span><img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'></span> Today .
+        {{daily[0].weather[0].main}}</div>
+        <div>{{daily[0].temp.max| number : '1.0-0'}}&deg; / {{daily[0].temp.min| number : '1.0-0'}}&deg;</div>
+        <div><span><img src='https://openweathermap.org/img/wn/{{tomorrowIcon}}@2x.png'></span> Tomorrow 
+        {{daily[1].weather[0].main}} </div><div> {{daily[1].temp.max| number : '1.0-0'}}&deg; / {{daily[1].temp.min| number : '1.0-0'}}&deg;</div>
+        <div><span><img src='https://openweathermap.org/img/wn/{{nextDayIcon}}@2x.png'></span> Next Day .
+         {{daily[2].weather[0].main}} </div><div> {{daily[2].temp.max| number : '1.0-0'}}&deg; / {{daily[2].temp.min| number : '1.0-0'}}&deg;</div>
+    </div>
+    <div class="forecast-btn-place">
+        <div class="weekly-forecast-btn">7 days forecast</div>
     </div>
 </div>
-    <!-- <input type="text" (keyup)="search(this.$event)" placeholder="Enter City Name" (value)="city" required> -->
 
-    <!-- <input type="text" #default [placeholder]="placeholder"><button (click)="defaultCity()">Save</button> -->
-</div>
-<ng-template #elseBlock>
-    <div style="text-align:center">
-        Loading ...
-    </div>
-</ng-template>
+    <ng-template #elseBlock>
+        <div class="loadingview">
+            <div class="loader">
+                <span style="--j:1"></span>
+                <span style="--j:2"></span>
+                <span style="--j:3"></span>
+            </div>
+        </div>
+    </ng-template>

@@ -29,15 +29,17 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public currentIcon: string;
   public sub: Subscription;
   public citySubscripton: Subscription;
+  public cityDetail: Place;
   ngOnInit(): void {
     this.citySubscripton = this.weatherService.citySub.subscribe((x: Place): void => {
     this.weatherService.get(x);
+    this.cityDetail = x;
     });
     this.sub = this.weatherService.subject.subscribe(
       (result) => {
         console.log(result);
         this.weather = result.current;
-        this.city = /.\/([aA-zZ]+)/.exec(result.timezone)[1];
+        this.city = result.timezone;
         this.daily = result.daily;
         this.currentIcon = result.current.weather[0].icon;
         this.todayIcon = result.daily[0].weather[0].icon;
@@ -46,6 +48,9 @@ export class WeatherComponent implements OnInit, OnDestroy {
       },
       (err) => console.log('Error', err)
     );
+  }
+  addCity(): void{
+    this.weatherService.addCity({...this.cityDetail});
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();

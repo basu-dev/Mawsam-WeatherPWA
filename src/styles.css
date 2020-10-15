@@ -19,42 +19,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', end
 overflow:hidden;
 color:white;
 }
-@media (max-width:768px){
-    AutocompleteComponent{
-        position: absolute;
-        left:-100%;
-    }
-    .top{
-        display:none;
-        position:fixed;
-        height:50px;
-        width: 100%;
-        padding:15px 35px;
-    
-        justify-content: space-between;
-        color:white;
-    }
-    .top span{
-        font-size:1.7rem;
-    }
-    .top p{
-        font-size:.8rem;
-        font-weight: 400;
-    }
-    
-.top,.first-page{
-    display:flex;
-    align-items: center;
-}
-}
 ::-webkit-scrollbar{
     width: 0;
 }
     
-app-weather{
+/* app-weather{
     height: 100vh;
     overflow: scroll;
-}
+} */
 app-root{
     display:grid;
     grid-template-columns: 4fr 5fr 4fr;

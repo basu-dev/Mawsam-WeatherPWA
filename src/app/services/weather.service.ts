@@ -1,15 +1,16 @@
-
+import { PartialWeather } from './../model/weather';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Observable, of, Subject, throwError } from 'rxjs';
-import { OneWeather, Place } from '../model/weather';
+import { Observable, of, Subject, throwError, Subscription } from 'rxjs';
+import { CurrentWeather, OneWeather, Place } from '../model/weather';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
   APP_ID = '2f111e4b3f03c4f196c708bc43c33f8b';
   weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
   cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
+  currentWeatherUrl= 'https://api.openweathermap.org/data/2.5/weather';
   MY_API = 'AIzaSyCJ67H5QBLVTdO2pnmEmC2THDx95rWyC1g';
   lat = null;
   lon = null;
@@ -17,6 +18,8 @@ export class WeatherService {
   public weatherData: OneWeather = null;
   public subject = new Subject<any>();
   public citySub = new Subject<Place>();
+  public selectedCities: Place[] = [];
+  public cityUpdatedSub = new Subject<Place[]>();
 
   constructor(public httpClient: HttpClient) {}
   private getGeolocation(): boolean {
@@ -32,7 +35,7 @@ export class WeatherService {
   get(city?: Place): void {
     this.lat = city.lat;
     this.lon = city.lon;
-    console.log(this.lat,this.lon);
+    console.log(this.lat, this.lon);
     const result = this.httpClient
       .get<OneWeather>(this.weatherUrl, {
         params: {
@@ -45,9 +48,10 @@ export class WeatherService {
       })
       .pipe(
         map((x: OneWeather) => {
-          return {...x, timezone: `abc/${city.name}}`
-        }; }),
-        catchError(this.handleError<OneWeather>('get', {})));
+          return { ...x, timezone: `${city.name}` };
+        }),
+        catchError(this.handleError<OneWeather>('get', {}))
+      );
     const subsc = result.subscribe((data) => {
       this.weatherData = data;
       this.subject.next({ ...this.weatherData });
@@ -75,12 +79,65 @@ export class WeatherService {
       return of(result as T);
     };
   }
-  public setCity(name: string, lat: number, lon: number): boolean {
+  public addCity(city: Place): void {
+    this.selectedCities.push(city);
+    this.dispatchCities();
+    this.setCities();
+  }
+  public removeCity(city: Place): void {
+    let index: number;
+    this.selectedCities.forEach((x, i) => {
+      if (x.name === city.name) {
+        index = i;
+      }
+      if (index > -1) {
+        this.selectedCities.splice(i, 1);
+        this.dispatchCities();
+        this.setCities();
+      }
+    });
+    this.setCities();
+  }
+  public getCities(): void {
+    const cities: Place[] = JSON.parse(localStorage.getItem('cities'));
+    this.selectedCities = cities?cities:[];
+    this.dispatchCities();
+  }
+  public setCities(): void{
+    localStorage.setItem('cities', JSON.stringify(this.selectedCities));
+  }
+  private dispatchCities(): void {
+    console.log("from dispatch")
+    this.cityUpdatedSub.next( this.selectedCities );
+  }
+  public setDefaultCity(name: string, lat: number, lon: number): boolean {
     const val = { name, lat, lon };
     localStorage.setItem('default', JSON.stringify(val));
     return true;
   }
-  public getCity(): any {
-    return JSON.parse(localStorage.getItem("default"));
+  public getDefaultCity(): any {
+    return JSON.parse(localStorage.getItem('default'));
   }
+  public getCurrentWeather(city: Place): Observable<PartialWeather> {
+    let weather: PartialWeather;
+    return this.httpClient
+    .get<any>(this.currentWeatherUrl, {
+      params: {
+        lat: city.lat.toString(),
+        lon: city.lon.toString(),
+        APPID: this.APP_ID,
+        units: 'metric',
+        exclude: 'minutely',
+      },
+    }).pipe(
+      tap(x=>console.log(x)),
+      map((x:any)=>{
+        weather.temp=x.main.temp;
+        weather.max_temp=x.main.temp_max;
+        weather.min_temp=x.main.temp_min;
+        return weather;
+      })
+    )
+  }
+
 }

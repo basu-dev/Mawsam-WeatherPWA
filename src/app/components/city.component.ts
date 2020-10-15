@@ -1,11 +1,12 @@
+import { Subscription } from 'rxjs';
 import {
   Component,
   ViewChild,
   EventEmitter,
   Output,
-  OnInit,
   AfterViewInit,
   Input,
+  OnInit,
 } from '@angular/core';
 import {} from 'googlemaps';
 import { Place } from '../model/weather';
@@ -22,7 +23,7 @@ import { WeatherService } from '../services/weather.service';
       [(ngModel)]="autocompleteInput"
       #addresstext
     />
-    <city-detail *ngFor="let city of cities" [city]=city></city-detail>
+    <city-detail *ngFor="let city of cities" (click)="loadWeather(city)" [city]=city></city-detail>
   `,
   styles: [`
 input{
@@ -40,26 +41,32 @@ input::placeholder{
 }
   `]
 })
-export class AutocompleteComponent implements  AfterViewInit {
+export class AutocompleteComponent implements  AfterViewInit ,OnInit{
   @Input() adressType: string;
   @Output() setAddress: EventEmitter<any> = new EventEmitter();
   @ViewChild('addresstext') addresstext: any;
 
   autocompleteInput: string;
   queryWait: boolean;
-  public cities: Place[] = [{
-    name:'Kathmandu',
-    temp: {
-      min: 15,
-      max: 23,
-      current: 22
-    }
-  }]
+  public citiesSub: Subscription;
+  public cities: Place[];
   constructor(public service: WeatherService) {}
+  ngOnInit(): void{
+    console.log("oninit");
+    this.service.getCities();
+  }
   ngAfterViewInit(): void {
-    const a = this.service.getCity();
+    this.citiesSub = this.service.cityUpdatedSub.subscribe((cities: Place[]) => {
+      console.log(cities);
+      this.cities = cities;
+     });
+    console.log('afterinit')
+    const a = this.service.getDefaultCity();
     this.service.citySub.next({...a});
     this.getPlaceAutocomplete();
+  }
+  loadWeather(city: Place): void{
+    this.service.citySub.next({...city});
   }
   private getPlaceAutocomplete(): void {
     const autocomplete = new google.maps.places.Autocomplete(
@@ -87,9 +94,7 @@ export class AutocompleteComponent implements  AfterViewInit {
       if (status === google.maps.GeocoderStatus.OK) {
         const lat = results[0].geometry.location.lat();
         const lon = results[0].geometry.location.lng();
-        const a: Place = {name: address, lat , lon };
-        // console.log('Latitude: ' +);
-        // console.log('Longitude: ' + );
+        const a: Place = {name: address, lat , lon , temp:{min: 0 , max: 0, current: 0} };
         this.service.citySub.next({...a});
       } else {
         console.log('Geocode was not successful for the following reason: ' + status);
