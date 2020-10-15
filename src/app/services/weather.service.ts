@@ -22,19 +22,30 @@ export class WeatherService {
   public cityUpdatedSub = new Subject<Place[]>();
 
   constructor(public httpClient: HttpClient) {}
-  public getGeolocation(): boolean {
+  public getGeolocation(): void {
     console.log("geolo")
     if (!this.geoTaken && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos: any): boolean => {
-        this.lat = pos.coord.latitude;
-        this.lon = pos.coord.longitude;
-        console.log(this.lat,this.lon);
-        return true;
-      });
-      return false;
+     this.getPosition().then(x=>{
+       this.get(x);
+     });
     }
   }
+  getPosition(): Promise<Place>
+  {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+          resolve({lon: resp.coords.longitude, lat: resp.coords.latitude});
+        },
+        err => {
+          reject(err);
+        });
+    });
+
+  }
   get(city?: Place): void {
+    console.log(city);
     this.lat = city.lat;
     this.lon = city.lon;
     console.log(this.lat, this.lon);

@@ -1,3 +1,5 @@
+import { SideBarDirective } from './directives/sidebar.directive';
+import { UIService } from './services/ui.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +19,8 @@ import { AutocompleteComponent } from './components/city.component';
     AppComponent,
     WeatherComponent,
     AutocompleteComponent,
-    CityDetailComponent
+    CityDetailComponent,
+    SideBarDirective
   ],
   imports: [
     BrowserModule,
@@ -28,7 +31,7 @@ import { AutocompleteComponent } from './components/city.component';
   ],
   providers: [
     WeatherService,
-
+    UIService
   ],
   bootstrap: [AppComponent]
 })

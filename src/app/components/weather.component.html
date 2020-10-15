@@ -1,9 +1,8 @@
 <div class="weather-component" *ngIf="weather; else elseBlock">
     <div class="top">
-        <span>+</span>
+        <span (click) = (openSidebar())>+</span>
         <div class="name"><h3>{{city}}<br>
             <p>{{weatherService.getTime()}}</p></h3>
-
             <div *ngIf="!cityDetail.added;else tickBlock" (click)="addCity()" class="plus-button"></div>
             <ng-template #tickBlock>
                 <div class="success-checkmark" (click) = "removeCity()"></div>

@@ -1,3 +1,4 @@
+import { UIService } from './../services/ui.service';
 import { Place } from './../model/weather';
 import {
   Component,
@@ -17,7 +18,9 @@ import { CurrentWeather, DailyWeather } from '../model/weather';
   templateUrl: 'weather.component.html',
 })
 export class WeatherComponent implements OnInit, OnDestroy {
-  constructor(public weatherService: WeatherService) {}
+  constructor(public weatherService: WeatherService,
+              public uiSerivce: UIService
+    ) {}
   @ViewChild('default') default: ElementRef;
   public placeholder = '';
   public city: string;
@@ -31,8 +34,13 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public citySubscripton: Subscription;
   public cityDetail: Place;
   ngOnInit(): void {
+    this.weatherService.getGeolocation();
     this.citySubscripton = this.weatherService.citySub.subscribe((x: Place): void => {
-    this.weatherService.get(x);
+    if(x.lat){
+      this.weatherService.get(x);
+    }
+    else{
+    }
     this.cityDetail = x;
     });
     this.sub = this.weatherService.subject.subscribe(
@@ -56,6 +64,9 @@ export class WeatherComponent implements OnInit, OnDestroy {
   removeCity(): void{
     this.cityDetail.added = false;
     this.weatherService.removeCity({...this.cityDetail});
+  }
+  openSidebar(): void{
+    this.uiSerivce.sideBarSub.next({open:true});
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();
