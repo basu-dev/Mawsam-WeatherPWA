@@ -4,8 +4,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template:  `
+  <AutocompleteComponent></AutocompleteComponent>
   <app-weather></app-weather>
-  <!-- <AutocompleteComponent></AutocompleteComponent> -->
+  <div></div>
   `
 })
 export class AppComponent {

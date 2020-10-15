@@ -1,8 +1,9 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
-import { OneWeather } from '../model/weather';
+import { Observable, of, Subject, throwError } from 'rxjs';
+import { OneWeather, Place } from '../model/weather';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
@@ -13,7 +14,10 @@ export class WeatherService {
   lat = null;
   lon = null;
   geoTaken = false;
-  public weatherData:OneWeather=null;
+  public weatherData: OneWeather = null;
+  public subject = new Subject<any>();
+  public citySub = new Subject<Place>();
+
   constructor(public httpClient: HttpClient) {}
   private getGeolocation(): boolean {
     if (!this.geoTaken && navigator.geolocation) {
@@ -25,13 +29,11 @@ export class WeatherService {
       return false;
     }
   }
-  parseTemp(temp: number): number {
-    return Math.round(temp - 273);
-  }
-  get(city: string): Observable<OneWeather> {
-    this.lat = (27.71).toString();
-    this.lon = (85.32).toString();
-    let result = this.httpClient
+  get(city?: Place): void {
+    this.lat = city.lat;
+    this.lon = city.lon;
+    console.log(this.lat,this.lon);
+    const result = this.httpClient
       .get<OneWeather>(this.weatherUrl, {
         params: {
           lat: this.lat,
@@ -41,13 +43,18 @@ export class WeatherService {
           exclude: 'minutely',
         },
       })
-      .pipe(catchError(this.handleError<OneWeather>('get', {})));
-      let subsc = result.subscribe(data=>this.weatherData = data);;
-    return result;
-
+      .pipe(
+        map((x: OneWeather) => {
+          return {...x, timezone: `abc/${city.name}}`
+        }; }),
+        catchError(this.handleError<OneWeather>('get', {})));
+    const subsc = result.subscribe((data) => {
+      this.weatherData = data;
+      this.subject.next({ ...this.weatherData });
+    });
   }
   getTime(): string {
-    let a: Date = new Date();
+    const a: Date = new Date();
     let hours = a.getHours();
     let sit = 'AM';
     if (hours > 12) {
@@ -67,5 +74,13 @@ export class WeatherService {
       // Let the app keep running by returning an empty result.
       return of(result as T);
     };
+  }
+  public setCity(name: string, lat: number, lon: number): boolean {
+    const val = { name, lat, lon };
+    localStorage.setItem('default', JSON.stringify(val));
+    return true;
+  }
+  public getCity(): any {
+    return JSON.parse(localStorage.getItem("default"));
   }
 }

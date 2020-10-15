@@ -43,3 +43,13 @@ export interface DailyWeather {
   wind_deg: number;
   wind_speed: number;
 }
+export interface Place {
+  name?: string;
+  lat?: number;
+  lon?: number;
+  temp?:{
+    current:number,
+    min:number,
+    max:number
+  }
+}

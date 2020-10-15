@@ -1,4 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Place } from './../model/weather';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import { WeatherService } from '../services/weather.service';
 import { CurrentWeather, DailyWeather } from '../model/weather';
 
@@ -7,7 +16,7 @@ import { CurrentWeather, DailyWeather } from '../model/weather';
   styleUrls: ['weather.component.css'],
   templateUrl: 'weather.component.html',
 })
-export class WeatherComponent implements OnInit {
+export class WeatherComponent implements OnInit, OnDestroy {
   constructor(public weatherService: WeatherService) {}
   @ViewChild('default') default: ElementRef;
   public placeholder = '';
@@ -18,18 +27,13 @@ export class WeatherComponent implements OnInit {
   public tomorrowIcon: string;
   public nextDayIcon: string;
   public currentIcon: string;
+  public sub: Subscription;
+  public citySubscripton: Subscription;
   ngOnInit(): void {
-    this.placeholder =
-      localStorage.getItem('city') != null
-        ? 'Change Default City'
-        : 'Choose Default City';
-    setTimeout((_) => {
-      this.getApi(localStorage.getItem('city'));
+    this.citySubscripton = this.weatherService.citySub.subscribe((x: Place): void => {
+    this.weatherService.get(x);
     });
-  }
-
-  getApi(city: string): void {
-    this.weatherService.get(city).subscribe(
+    this.sub = this.weatherService.subject.subscribe(
       (result) => {
         console.log(result);
         this.weather = result.current;
@@ -39,20 +43,12 @@ export class WeatherComponent implements OnInit {
         this.todayIcon = result.daily[0].weather[0].icon;
         this.tomorrowIcon = result.daily[1].weather[0].icon;
         this.nextDayIcon = result.daily[2].weather[0].icon;
-        console.log(this.tomorrowIcon);
-        console.log(this.city);
       },
       (err) => console.log('Error', err)
     );
   }
-  search(e): void {
-    console.log(e);
-    if (e.key === 'Enter') {
-      this.getApi(e.target.value);
-    }
-  }
-  defaultCity(): void {
-    localStorage.setItem('city', this.default.nativeElement.value);
-    this.getApi(this.default.nativeElement.value);
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+    this.citySubscripton.unsubscribe();
   }
 }

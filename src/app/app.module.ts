@@ -4,9 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
+import { CityDetailComponent } from './components/city-detail.component';
 import { WeatherComponent } from './components/weather.component';
 import { WeatherService } from './services/weather.service';
 import { AutocompleteComponent } from './components/city.component';
@@ -15,7 +16,8 @@ import { AutocompleteComponent } from './components/city.component';
   declarations: [
     AppComponent,
     WeatherComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    CityDetailComponent
   ],
   imports: [
     BrowserModule,
