@@ -22,11 +22,13 @@ export class WeatherService {
   public cityUpdatedSub = new Subject<Place[]>();
 
   constructor(public httpClient: HttpClient) {}
-  private getGeolocation(): boolean {
+  public getGeolocation(): boolean {
+    console.log("geolo")
     if (!this.geoTaken && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos: any): boolean => {
         this.lat = pos.coord.latitude;
         this.lon = pos.coord.longitude;
+        console.log(this.lat,this.lon);
         return true;
       });
       return false;
@@ -119,7 +121,7 @@ export class WeatherService {
     return JSON.parse(localStorage.getItem('default'));
   }
   public getCurrentWeather(city: Place): Observable<PartialWeather> {
-    let weather: PartialWeather;
+    let weather: PartialWeather = {};
     return this.httpClient
     .get<any>(this.currentWeatherUrl, {
       params: {
@@ -132,9 +134,9 @@ export class WeatherService {
     }).pipe(
       tap(x=>console.log(x)),
       map((x:any)=>{
-        weather.temp=x.main.temp;
-        weather.max_temp=x.main.temp_max;
-        weather.min_temp=x.main.temp_min;
+        weather.current= Math.round(x.main.temp);
+        weather.max_temp= Math.round(x.main.temp_max);
+        weather.min_temp= Math.round(x.main.temp_min);
         return weather;
       })
     )

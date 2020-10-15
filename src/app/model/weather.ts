@@ -21,7 +21,7 @@ export interface CurrentWeather {
   wind_speed: number;
 }
 export interface PartialWeather{
-  temp?:number;
+  current?:number;
   min_temp?:number;
   max_temp?:number;
 }
@@ -49,8 +49,9 @@ export interface DailyWeather {
   wind_speed: number;
 }
 export interface Place {
+  added?:boolean;
   name?: string;
   lat?: number;
   lon?: number;
-  temp?:PartialWeather
+  temp?:PartialWeather;
 }

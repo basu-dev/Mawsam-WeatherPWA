@@ -130,7 +130,7 @@
       justify-content: center;
       align-items:center;
   }
-  .plus-button {
+  .plus-button ,.success-checkmark{
     border:none;
     margin-left:1rem;
 	background-color: #00000033;
@@ -159,4 +159,16 @@
 	.plus-button::after {
 		height: 0.2em;
 		width: 1em;
-	}
+    }
+    .success-checkmark::after {
+        background:#ffffffa3;
+        content: '✔';
+        position: absolute;
+        left:0; top: 2px;
+        width: 100%; 
+        height: 100%;
+        text-align: center;
+        color: green;
+        border-radius:50%;
+        /* box-shadow: inset 0 1px 3px rgba(0,0,0,.3) */
+      }

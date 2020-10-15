@@ -3,7 +3,11 @@
         <span>+</span>
         <div class="name"><h3>{{city}}<br>
             <p>{{weatherService.getTime()}}</p></h3>
-            <div (click)="addCity()" class="plus-button"></div>
+
+            <div *ngIf="!cityDetail.added;else tickBlock" (click)="addCity()" class="plus-button"></div>
+            <ng-template #tickBlock>
+                <div class="success-checkmark" (click) = "removeCity()"></div>
+            </ng-template>
         </div>
         <span>..</span>
     </div>

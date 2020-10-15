@@ -6,7 +6,7 @@ import { WeatherService } from '../services/weather.service';
 @Component({
     selector: 'city-detail',
     template: `
-         <div class="grid">
+         <div class="grid" *ngIf="city.temp">
         <div class="updown-grid">
           <h4>{{city.name}}</h4>
           <small>{{city.temp.max_temp}}&deg; / {{city.temp.min_temp}}&deg;</small>

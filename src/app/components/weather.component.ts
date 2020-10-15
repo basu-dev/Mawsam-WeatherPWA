@@ -50,7 +50,12 @@ export class WeatherComponent implements OnInit, OnDestroy {
     );
   }
   addCity(): void{
+    this.cityDetail.added = true;
     this.weatherService.addCity({...this.cityDetail});
+  }
+  removeCity(): void{
+    this.cityDetail.added = false;
+    this.weatherService.removeCity({...this.cityDetail});
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();

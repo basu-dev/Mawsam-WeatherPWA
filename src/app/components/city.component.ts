@@ -52,16 +52,17 @@ export class AutocompleteComponent implements  AfterViewInit ,OnInit{
   public cities: Place[];
   constructor(public service: WeatherService) {}
   ngOnInit(): void{
-    console.log("oninit");
-    this.service.getCities();
-  }
-  ngAfterViewInit(): void {
+    this.service.getGeolocation();
     this.citiesSub = this.service.cityUpdatedSub.subscribe((cities: Place[]) => {
       console.log(cities);
       this.cities = cities;
      });
+    }
+    ngAfterViewInit(): void {
+    this.service.getCities();
     console.log('afterinit')
-    const a = this.service.getDefaultCity();
+    let a = this.service.getDefaultCity();
+    a=a?a:this.cities[0]?this.cities[0]:null;
     this.service.citySub.next({...a});
     this.getPlaceAutocomplete();
   }
@@ -94,7 +95,7 @@ export class AutocompleteComponent implements  AfterViewInit ,OnInit{
       if (status === google.maps.GeocoderStatus.OK) {
         const lat = results[0].geometry.location.lat();
         const lon = results[0].geometry.location.lng();
-        const a: Place = {name: address, lat , lon , temp:{min: 0 , max: 0, current: 0} };
+        const a: Place = {name: address, lat , lon , temp:{min_temp: 0 , max_temp: 0, current: 0} };
         this.service.citySub.next({...a});
       } else {
         console.log('Geocode was not successful for the following reason: ' + status);
