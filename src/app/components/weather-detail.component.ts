@@ -11,11 +11,11 @@ import { WeatherService } from '../services/weather.service';
     <div *ngIf="current" class="weather-detail">
         <div>
             <small>Sunrise</small>
-            <div class="info">{{current.sunrise}}</div>
+            <div class="info">{{sunrise}}</div>
         </div>
         <div>
             <small>Sunset</small>
-            <div class="info">{{current.sunset}}</div>
+            <div class="info">{{sunset}}</div>
         </div>
         <div>
             <small>Real Feel</small>
@@ -39,7 +39,7 @@ import { WeatherService } from '../services/weather.service';
         </div>
         <div>
             <small>Visibility</small>
-            <div class="info">{{current.visibility}}%</div>
+            <div class="info">{{current.visibility}}m</div>
         </div>
     </div>
 </div>
@@ -69,14 +69,14 @@ import { WeatherService } from '../services/weather.service';
 export class WeatherDetailComponent implements OnInit, OnDestroy {
   constructor(public weatheService: WeatherService) {}
   public current: CurrentWeather;
-  public sunrise: number;
-  public sunset: number;
+  public sunrise: string;
+  public sunset: string;
   public weatherSubscription: Subscription;
   ngOnInit(): void {
     this.weatherSubscription = this.weatheService.subject.subscribe((x: OneWeather) => {
         this.current = x.current;
-        this.sunrise = x.daily[0].sunrise;
-        this.sunset = x.daily[0].sunset;
+        this.sunrise = this.weatheService.getTime(x.daily[0].sunrise);
+        this.sunset = this.weatheService.getTime(x.daily[0].sunset);
     });
   }
   ngOnDestroy(): void{

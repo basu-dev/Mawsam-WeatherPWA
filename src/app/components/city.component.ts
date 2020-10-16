@@ -15,7 +15,8 @@ import { WeatherService } from '../services/weather.service';
 @Component({
   selector: 'app-cities',
   template: `
-  <h4>Manage Cities</h4><br/>
+    <h4>Manage Cities</h4>
+    <br />
     <input
       class="input"
       type="text"
@@ -23,25 +24,31 @@ import { WeatherService } from '../services/weather.service';
       [(ngModel)]="autocompleteInput"
       #addresstext
     />
-    <city-detail *ngFor="let city of cities" (click)="loadWeather(city)" [city]=city></city-detail>
+    <city-detail
+      *ngFor="let city of cities"
+      (click)="loadWeather(city)"
+      [city]="city"
+    ></city-detail>
   `,
-  styles: [`
-input{
-    width:100%;
-    border:none;
-    border-radius:50px;
-    background:#00000030;
-    color:white;
-    padding:10px 20px;
-    outline:none;
-    font-size:1.03rem;
-}
-input::placeholder{
-    color:#ffffffa3;
-}
-  `]
+  styles: [
+    `
+      input {
+        width: 100%;
+        border: none;
+        border-radius: 50px;
+        background: #00000030;
+        color: white;
+        padding: 10px 20px;
+        outline: none;
+        font-size: 1.03rem;
+      }
+      input::placeholder {
+        color: #ffffffa3;
+      }
+    `,
+  ],
 })
-export class  CityComponent implements  AfterViewInit ,OnInit{
+export class CityComponent implements AfterViewInit, OnInit {
   @Input() adressType: string;
   @Output() setAddress: EventEmitter<any> = new EventEmitter();
   @ViewChild('addresstext') addresstext: any;
@@ -51,14 +58,15 @@ export class  CityComponent implements  AfterViewInit ,OnInit{
   public citiesSub: Subscription;
   public cities: Place[];
   constructor(public service: WeatherService) {}
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.service.getGeolocation();
-    this.citiesSub = this.service.cityUpdatedSub.subscribe((cities: Place[]) => {
-      console.log(cities);
-      this.cities = cities;
-     });
-    }
-    ngAfterViewInit(): void {
+    this.citiesSub = this.service.cityUpdatedSub.subscribe(
+      (cities: Place[]) => {
+        this.cities = cities;
+      }
+    );
+  }
+  ngAfterViewInit(): void {
     this.service.getCities();
     // console.log('afterinit')
     // let a = this.service.getDefaultCity();
@@ -66,8 +74,8 @@ export class  CityComponent implements  AfterViewInit ,OnInit{
     // this.service.citySub.next({...a});
     this.getPlaceAutocomplete();
   }
-  loadWeather(city: Place): void{
-    this.service.citySub.next({...city});
+  loadWeather(city: Place): void {
+    this.service.citySub.next({ ...city });
   }
   private getPlaceAutocomplete(): void {
     const autocomplete = new google.maps.places.Autocomplete(
@@ -78,7 +86,6 @@ export class  CityComponent implements  AfterViewInit ,OnInit{
     );
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       const place = autocomplete.getPlace();
-    //   console.log(autocomplete.getPlace());
       this.codeAddress(place);
     });
   }
@@ -93,10 +100,17 @@ export class  CityComponent implements  AfterViewInit ,OnInit{
       if (status === google.maps.GeocoderStatus.OK) {
         const lat = results[0].geometry.location.lat();
         const lon = results[0].geometry.location.lng();
-        const a: Place = {name: address, lat , lon , temp:{min_temp: 0 , max_temp: 0, current: 0} };
-        this.service.citySub.next({...a});
+        const a: Place = {
+          name: address,
+          lat,
+          lon,
+          temp: { min_temp: 0, max_temp: 0, current: 0 },
+        };
+        this.service.citySub.next({ ...a });
       } else {
-        console.log('Geocode was not successful for the following reason: ' + status);
+        console.log(
+          'Geocode was not successful for the following reason: ' + status
+        );
       }
     });
   }

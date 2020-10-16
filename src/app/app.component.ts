@@ -22,5 +22,5 @@ export class AppComponent implements OnInit{
       this.openSidebar = x;
     })
   }
-  public title = 'Mawsam';
+  public title = 'Mawsam | Weather';
 }

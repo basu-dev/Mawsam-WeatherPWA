@@ -3,8 +3,9 @@ export interface OneWeather {
   hourly?: DailyWeather[];
   daily?: DailyWeather[];
   timezone?: string;
-  lat?:number;
-  lon?:number;
+  lat?: number;
+  lon?: number;
+  added?: boolean;
 }
 export interface CurrentWeather {
   clouds: number;
@@ -23,10 +24,10 @@ export interface CurrentWeather {
   wind_deg: number;
   wind_speed: number;
 }
-export interface PartialWeather{
-  current?:number;
-  min_temp?:number;
-  max_temp?:number;
+export interface PartialWeather {
+  current?: number;
+  min_temp?: number;
+  max_temp?: number;
 }
 export interface Weather {
   main: string;
@@ -52,9 +53,9 @@ export interface DailyWeather {
   wind_speed: number;
 }
 export interface Place {
-  added?:boolean;
+  added?: boolean;
   name?: string;
   lat?: number;
   lon?: number;
-  temp?:PartialWeather;
+  temp?: PartialWeather;
 }

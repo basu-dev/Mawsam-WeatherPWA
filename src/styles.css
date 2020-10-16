@@ -16,7 +16,6 @@ background: -moz-linear-gradient(left,  #63b6db 0%, #309dcf 100%); /* FF3.6-15 *
 background: -webkit-linear-gradient(left,  #63b6db 0%,#309dcf 100%); /* Chrome10-25,Safari5.1-6 */
 background: linear-gradient(to right,  #48b6e9 0%,#249dd5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', endColorstr='#309dcf',GradientType=1 ); /* IE6-9 */
-overflow:hidden;
 color:white;
 }
 ::-webkit-scrollbar{
@@ -39,13 +38,16 @@ app-cities{
     overflow:scroll;
 }
 @media (max-width:768px){
-    app-cities--{
-        position:absolute;
-        left:-100%;
-        top:0;
-    }
    app-root{
        grid-template-columns: 1fr;
+       overflow:scroll;
+       flex-wrap: wrap;
+   }
+   app-cities{
+       height:auto;
+   }
+   app-weather{
+       height: auto;
    }
    
 }
