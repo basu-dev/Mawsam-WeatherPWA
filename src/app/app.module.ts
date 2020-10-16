@@ -1,3 +1,4 @@
+import { WeatherDetailComponent } from './components/weather-detail.component';
 import { SideBarDirective } from './directives/sidebar.directive';
 import { UIService } from './services/ui.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,15 +13,17 @@ import { environment } from '../environments/environment';
 import { CityDetailComponent } from './components/city-detail.component';
 import { WeatherComponent } from './components/weather.component';
 import { WeatherService } from './services/weather.service';
-import { AutocompleteComponent } from './components/city.component';
+import {  CityComponent } from './components/city.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WeatherComponent,
-    AutocompleteComponent,
+    CityComponent,
     CityDetailComponent,
-    SideBarDirective
+    SideBarDirective,
+    WeatherDetailComponent
+
   ],
   imports: [
     BrowserModule,

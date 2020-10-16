@@ -1,14 +1,13 @@
 import { UIService } from './services/ui.service';
-// import { AutocompleteComponent } from './components/city.component';
 import { Component , ElementRef, OnInit, ViewChild} from '@angular/core';
 import { WeatherService } from './services/weather.service';
 
 @Component({
   selector: 'app-root',
   template:  `
-  <AutocompleteComponent *ngIf="openSidebar" sideBar="openSidebar?true:false" ></AutocompleteComponent>
+  <app-cities ></app-cities>
   <app-weather></app-weather>
-  <div></div>
+  <app-weather-detail></app-weather-detail>
   `
 })
 export class AppComponent implements OnInit{

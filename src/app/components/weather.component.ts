@@ -1,5 +1,5 @@
 import { UIService } from './../services/ui.service';
-import { Place } from './../model/weather';
+import { Place, OneWeather } from './../model/weather';
 import {
   Component,
   ElementRef,
@@ -34,18 +34,15 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public citySubscripton: Subscription;
   public cityDetail: Place;
   ngOnInit(): void {
-    this.weatherService.getGeolocation();
+    // this.weatherService.getGeolocation();
     this.citySubscripton = this.weatherService.citySub.subscribe((x: Place): void => {
     if(x.lat){
       this.weatherService.get(x);
     }
-    else{
-    }
     this.cityDetail = x;
     });
     this.sub = this.weatherService.subject.subscribe(
-      (result) => {
-        console.log(result);
+      (result: OneWeather) => {
         this.weather = result.current;
         this.city = result.timezone;
         this.daily = result.daily;
@@ -53,6 +50,13 @@ export class WeatherComponent implements OnInit, OnDestroy {
         this.todayIcon = result.daily[0].weather[0].icon;
         this.tomorrowIcon = result.daily[1].weather[0].icon;
         this.nextDayIcon = result.daily[2].weather[0].icon;
+        this.cityDetail = {
+          name: result.timezone,
+          lat: result.lat,
+          lon: result.lon,
+          added: false
+
+        }
       },
       (err) => console.log('Error', err)
     );

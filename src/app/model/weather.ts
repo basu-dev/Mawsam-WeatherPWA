@@ -3,10 +3,13 @@ export interface OneWeather {
   hourly?: DailyWeather[];
   daily?: DailyWeather[];
   timezone?: string;
+  lat?:number;
+  lon?:number;
 }
 export interface CurrentWeather {
   clouds: number;
   dew_point: number;
+  time?: string;
   dt: number;
   feels_like: number;
   humidity: number;

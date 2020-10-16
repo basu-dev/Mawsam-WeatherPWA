@@ -32,15 +32,14 @@ app-root{
     grid-template-columns: 4fr 5fr 4fr;
 }
 
-AutocompleteComponent{
+app-cities{
     padding:10px;
     text-align: center;
     height: 100vh;
     overflow:scroll;
 }
 @media (max-width:768px){
-
-    AutocompleteComponent{
+    app-cities--{
         position:absolute;
         left:-100%;
         top:0;
@@ -48,4 +47,13 @@ AutocompleteComponent{
    app-root{
        grid-template-columns: 1fr;
    }
+   
 }
+app-weather-detail{
+    padding:10px;
+    text-align: center;
+}
+/* 
+h1,h2,h3,h4,h5{
+    font-family: var(--secondary-font);
+} */

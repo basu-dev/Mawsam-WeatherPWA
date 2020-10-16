@@ -5,5 +5,4 @@ import { Subject } from 'rxjs';
 export class UIService {
     constructor() { }
 public sideBarSub = new Subject<any>();
-    
 }

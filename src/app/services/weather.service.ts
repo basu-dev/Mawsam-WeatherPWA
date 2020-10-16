@@ -1,9 +1,9 @@
-import { PartialWeather } from './../model/weather';
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Observable, of, Subject, throwError, Subscription } from 'rxjs';
-import { CurrentWeather, OneWeather, Place } from '../model/weather';
+import { PartialWeather, CurrentWeather, OneWeather, Place } from '../model/weather';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
@@ -12,18 +12,19 @@ export class WeatherService {
   cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
   currentWeatherUrl= 'https://api.openweathermap.org/data/2.5/weather';
   MY_API = 'AIzaSyCJ67H5QBLVTdO2pnmEmC2THDx95rWyC1g';
+  POSITION_KEY = '26089ac1886b2def99aaddd358ce12e7';
   lat = null;
   lon = null;
   geoTaken = false;
   public weatherData: OneWeather = null;
+  // subjects
   public subject = new Subject<any>();
   public citySub = new Subject<Place>();
-  public selectedCities: Place[] = [];
   public cityUpdatedSub = new Subject<Place[]>();
+  public selectedCities: Place[] = [];
 
   constructor(public httpClient: HttpClient) {}
   public getGeolocation(): void {
-    console.log("geolo")
     if (!this.geoTaken && navigator.geolocation) {
      this.getPosition().then(x=>{
        this.get(x);
@@ -33,13 +34,11 @@ export class WeatherService {
   getPosition(): Promise<Place>
   {
     return new Promise((resolve, reject) => {
-
       navigator.geolocation.getCurrentPosition(resp => {
-
-          resolve({lon: resp.coords.longitude, lat: resp.coords.latitude});
+          resolve({lon: resp.coords.longitude, lat: resp.coords.latitude, name: 'Your Location'});
         },
         err => {
-          reject(err);
+          resolve({lon: 27.71 , lat: 85.31, name: 'Your Location' });
         });
     });
 
@@ -48,7 +47,6 @@ export class WeatherService {
     console.log(city);
     this.lat = city.lat;
     this.lon = city.lon;
-    console.log(this.lat, this.lon);
     const result = this.httpClient
       .get<OneWeather>(this.weatherUrl, {
         params: {
@@ -63,6 +61,12 @@ export class WeatherService {
         map((x: OneWeather) => {
           return { ...x, timezone: `${city.name}` };
         }),
+        // map((x: OneWeather)=>{
+        //     const city: Place = {lat: this.lat, lon: this.lon};
+        //     const name = this.inSelectedCity({...city});
+        //     x.timezone = name ? name : x.timezone;
+        //     return x;
+        // }),
         catchError(this.handleError<OneWeather>('get', {}))
       );
     const subsc = result.subscribe((data) => {
@@ -70,7 +74,8 @@ export class WeatherService {
       this.subject.next({ ...this.weatherData });
     });
   }
-  getTime(): string {
+  getTime(unixtime?: number): string {
+    unixtime = unixtime ? unixtime : 0;
     const a: Date = new Date();
     let hours = a.getHours();
     let sit = 'AM';
@@ -79,6 +84,7 @@ export class WeatherService {
       sit = 'PM';
     }
     return `${hours}:${a.getMinutes()} ${sit}`;
+  
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -93,34 +99,47 @@ export class WeatherService {
     };
   }
   public addCity(city: Place): void {
-    this.selectedCities.push(city);
-    this.dispatchCities();
-    this.setCities();
+    if(this.cityAlreadyAdded(city) === -1){
+      this.selectedCities.unshift(city);
+      this.dispatchCities();
+      this.setCities();
+    }
+  }
+  private inSelectedCity(city: Place): string | void{
+    this.selectedCities.forEach((x, i) => {
+      if (x.lat.toFixed(1) === city.lat.toFixed(1) && 
+          x.lon.toFixed(1) === city.lat.toFixed(1)
+        ) {
+        return x.name;
+      }
+    });
+  }
+  private cityAlreadyAdded(city: Place): number{
+    let index = -1;
+    this.selectedCities.forEach((x, i) => {
+    if (x.name === city.name) {
+      index =  i;
+    }
+  });
+    return index;
   }
   public removeCity(city: Place): void {
-    let index: number;
-    this.selectedCities.forEach((x, i) => {
-      if (x.name === city.name) {
-        index = i;
-      }
+      const index = this.cityAlreadyAdded(city);
       if (index > -1) {
-        this.selectedCities.splice(i, 1);
+        this.selectedCities.splice(index, 1);
         this.dispatchCities();
         this.setCities();
       }
-    });
-    this.setCities();
   }
   public getCities(): void {
     const cities: Place[] = JSON.parse(localStorage.getItem('cities'));
-    this.selectedCities = cities?cities:[];
+    this.selectedCities = cities ? cities: [];
     this.dispatchCities();
   }
   public setCities(): void{
     localStorage.setItem('cities', JSON.stringify(this.selectedCities));
   }
   private dispatchCities(): void {
-    console.log("from dispatch")
     this.cityUpdatedSub.next( this.selectedCities );
   }
   public setDefaultCity(name: string, lat: number, lon: number): boolean {
@@ -132,7 +151,7 @@ export class WeatherService {
     return JSON.parse(localStorage.getItem('default'));
   }
   public getCurrentWeather(city: Place): Observable<PartialWeather> {
-    let weather: PartialWeather = {};
+    const weather: PartialWeather = {};
     return this.httpClient
     .get<any>(this.currentWeatherUrl, {
       params: {

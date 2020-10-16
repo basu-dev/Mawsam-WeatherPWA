@@ -13,7 +13,7 @@ import { Place } from '../model/weather';
 import { WeatherService } from '../services/weather.service';
 
 @Component({
-  selector: 'AutocompleteComponent',
+  selector: 'app-cities',
   template: `
   <h4>Manage Cities</h4><br/>
     <input
@@ -41,7 +41,7 @@ input::placeholder{
 }
   `]
 })
-export class AutocompleteComponent implements  AfterViewInit ,OnInit{
+export class  CityComponent implements  AfterViewInit ,OnInit{
   @Input() adressType: string;
   @Output() setAddress: EventEmitter<any> = new EventEmitter();
   @ViewChild('addresstext') addresstext: any;
@@ -60,10 +60,10 @@ export class AutocompleteComponent implements  AfterViewInit ,OnInit{
     }
     ngAfterViewInit(): void {
     this.service.getCities();
-    console.log('afterinit')
-    let a = this.service.getDefaultCity();
-    a=a?a:this.cities[0]?this.cities[0]:null;
-    this.service.citySub.next({...a});
+    // console.log('afterinit')
+    // let a = this.service.getDefaultCity();
+    // a=a?a:this.cities[0]?this.cities[0]:null;
+    // this.service.citySub.next({...a});
     this.getPlaceAutocomplete();
   }
   loadWeather(city: Place): void{
@@ -77,7 +77,6 @@ export class AutocompleteComponent implements  AfterViewInit ,OnInit{
       }
     );
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
-      console.log(autocomplete);
       const place = autocomplete.getPlace();
     //   console.log(autocomplete.getPlace());
       this.codeAddress(place);
@@ -89,7 +88,6 @@ export class AutocompleteComponent implements  AfterViewInit ,OnInit{
   }
   codeAddress(place): void {
     const geocoder = new google.maps.Geocoder();
-    console.log(place);
     const address = place.name;
     geocoder.geocode({ address }, (results, status): void => {
       if (status === google.maps.GeocoderStatus.OK) {
