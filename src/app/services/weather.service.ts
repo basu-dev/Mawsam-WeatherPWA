@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -67,7 +66,7 @@ export class WeatherService {
       })
       .pipe(
         map((x: OneWeather) => {
-          if(this.cityAlreadyAdded(city) > -1){
+          if (this.cityAlreadyAdded(city) > -1) {
             x.added = true;
           }
           return { ...x, timezone: `${city.name}` };
@@ -86,7 +85,7 @@ export class WeatherService {
     });
   }
   getTime(unixtime?: number): string {
-    const a = (unixtime > 0) ? new Date(unixtime * 1000) : new Date();
+    const a = unixtime > 0 ? new Date(unixtime * 1000) : new Date();
     let hours = a.getHours();
     let sit = 'AM';
     if (hours >= 12) {

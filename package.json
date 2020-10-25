@@ -8,7 +8,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "https": "ng serve --host 192.168.1.14 --ssl --ssl-key e:\\certificates\\localhost.key --ssl-cert e:\\certificates\\localhost.crt"
+    "https": "ng serve --host 192.168.43.158 --ssl --ssl-key e:\\certificates\\localhost.key --ssl-cert e:\\certificates\\localhost.crt"
   },
   "private": true,
   "dependencies": {

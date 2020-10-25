@@ -14,7 +14,8 @@ export class AppComponent implements OnInit{
   constructor(private service: WeatherService,
               private uiService: UIService
     ){}
-  public openSidebar:boolean;
+  public title = 'Mawsam | Weather';
+  public openSidebar: boolean;
   @ViewChild('sideBar') sideBar: ElementRef;
   ngOnInit(): void{
     this.service.getCities();
@@ -22,5 +23,4 @@ export class AppComponent implements OnInit{
       this.openSidebar = x;
     })
   }
-  public title = 'Mawsam | Weather';
 }

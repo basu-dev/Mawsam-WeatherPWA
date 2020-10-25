@@ -1494,6 +1494,7 @@
 // https://api.openweathermap.org/data/2.5/onecall?lat=27.89&lon=85.15&APPID=2f111e4b3f03c4f196c708bc43c33f8b&units=metric&exclude=minutely
 
 {
+  
     "lat": 27.89,
     "lon": 85.15,
     "timezone": "Asia/Kathmandu",

@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&display=swap');
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&display=swap');
 :root{
     --primary-font:'Verdana';
     --secondary-font:'Big Shoulders Text';
@@ -21,11 +21,6 @@ color:white;
 ::-webkit-scrollbar{
     width: 0;
 }
-    
-/* app-weather{
-    height: 100vh;
-    overflow: scroll;
-} */
 app-root{
     display:grid;
     grid-template-columns: 4fr 5fr 4fr;
@@ -45,6 +40,10 @@ app-cities{
    }
    app-cities{
        height:auto;
+       margin-top:-10px;
+   }
+   app-cities h4{
+        display:none;
    }
    app-weather{
        height: auto;

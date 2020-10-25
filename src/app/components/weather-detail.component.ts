@@ -7,8 +7,8 @@ import { WeatherService } from '../services/weather.service';
   selector: 'app-weather-detail',
   template: `
   <div>
-    <h4>Weather Detail</h4>
-    <div *ngIf="current" class="weather-detail">
+      <h4 *ngIf="current">Weather Detail</h4>
+      <div *ngIf="current" class="weather-detail">
         <div>
             <small>Sunrise</small>
             <div class="info">{{sunrise}}</div>

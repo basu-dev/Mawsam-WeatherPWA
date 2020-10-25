@@ -13,7 +13,7 @@ import { environment } from '../environments/environment';
 import { CityDetailComponent } from './components/city-detail.component';
 import { WeatherComponent } from './components/weather.component';
 import { WeatherService } from './services/weather.service';
-import {  CityComponent } from './components/city.component';
+import {  CityComponent } from './components/cities.component';
 
 @NgModule({
   declarations: [
