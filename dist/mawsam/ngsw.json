@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1602868499880,
+  "timestamp": 1603800101734,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,13 +13,16 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.a15ea2b4107209e47a80.js",
+        "/main.8524a344a9d0ec43219f.js",
         "/manifest.webmanifest",
         "/polyfills.35a5ca1855eb057f016a.js",
         "/runtime.acf0dec4155e77772545.js",
-        "/styles.3c2d2b593e1c3f84ced1.css"
+        "/styles.cf5505f897ab187f51b8.css"
       ],
-      "patterns": []
+      "patterns": [
+        "https:\\/\\/fonts\\.googleapis\\.com\\/css2\\?family=Big\\+Shoulders\\+Text:wght@100&display=swap",
+        "https:\\/\\/fonts\\.gstatic\\.com\\/.*"
+      ]
     },
     {
       "name": "assets",
@@ -41,23 +44,38 @@
       "patterns": []
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "weather",
+      "patterns": [
+        "https:\\/\\/api\\.openweathermap\\.org\\/data\\/2\\.5\\/.*"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 432000000,
+      "timeoutMs": 5000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
   "hashTable": {
-    "/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
-    "/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "/assets/icons/icon-128x128.png": "935afc6c98fc9818e2a417c81281caed611eadb5",
+    "/assets/icons/icon-144x144.png": "196074952a5ea2640b506cf0497e591f66a6c545",
     "/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
-    "/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "/assets/icons/icon-192x192.png": "f551e91ea2faf5db315b5a093de7720685a4021f",
     "/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
-    "/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
-    "/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "/assets/icons/icon-512x512.png": "e4982c515fb6840da4cdb9cfac353eb2b4036b10",
+    "/assets/icons/icon-72x72.png": "560262fc68070c24b9e986bbfd308eaf041d80c4",
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/favicon.ico": "f936f4169d52a070839bfcc5e9ae7e8c6b097f5d",
-    "/index.html": "a8e33b89cb0eb8b2e8e2fecddae6c7b931d27305",
-    "/main.a15ea2b4107209e47a80.js": "9d702f28d34a53bee450ace8a0e4f8c6f59fa871",
-    "/manifest.webmanifest": "366b369b2dd2b5dfc89d907c716fad2b24dbf135",
+    "/index.html": "a0d1ea0835dbbe076df4716f4054a6310fa49e9a",
+    "/main.8524a344a9d0ec43219f.js": "24b2aff7ce6ed36b003a6a4399eab46124ddc335",
+    "/manifest.webmanifest": "4d89c2792ba8faf68aae3ff3ecf728002b68a479",
     "/polyfills.35a5ca1855eb057f016a.js": "578360d24ce37383f261c7ef63b1f822d28e8dde",
     "/runtime.acf0dec4155e77772545.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/styles.3c2d2b593e1c3f84ced1.css": "f7ac30aafba968df539f62b4e61b2ddb899e2be7"
+    "/styles.cf5505f897ab187f51b8.css": "9bb866a54b372ead6cceebef5e5e92f334c88d8c"
   },
   "navigationUrls": [
     {

@@ -12,6 +12,10 @@
           "/manifest.webmanifest",
           "/*.css",
           "/*.js"
+        ],
+        "urls": [
+          "https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&display=swap",
+          "https://fonts.gstatic.com/**"
         ]
       }
     },
@@ -26,5 +30,17 @@
         ]
       }
     }
-  ]
+  ],
+  "dataGroups": [{
+    "name": "weather",
+    "urls":[
+      "https://api.openweathermap.org/data/2.5/**"
+    ],
+    "cacheConfig": {
+      "maxSize": 10,
+      "timeout": "5s",
+      "maxAge": "5d",
+      "strategy": "performance"
+    }
+  }]
 }
