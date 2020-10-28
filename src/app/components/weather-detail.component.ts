@@ -49,7 +49,7 @@ import { WeatherService } from '../services/weather.service';
     .weather-detail{
         margin-top:10px;
         text-align:left;
-        background:#00000030;
+        background:var(--light-background);
         border-radius:10px;
         padding:10px;
         display:grid;
@@ -75,8 +75,8 @@ export class WeatherDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.weatherSubscription = this.weatheService.subject.subscribe((x: OneWeather) => {
         this.current = x.current;
-        this.sunrise = this.weatheService.getTime(x.daily[0].sunrise);
-        this.sunset = this.weatheService.getTime(x.daily[0].sunset);
+        this.sunrise = this.weatheService.getTime(x.daily[0].sunrise).time;
+        this.sunset = this.weatheService.getTime(x.daily[0].sunset).time;
     });
   }
   ngOnDestroy(): void{

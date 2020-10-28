@@ -25,7 +25,7 @@ import { WeatherService } from '../services/weather.service';
         text-align: left;
         height: 60px;
         width: 100%;
-        background: #0000009e;
+        background: var(--semilight-background);
         border-radius: 10px;
         align-items: center;
         display: grid;
@@ -33,6 +33,9 @@ import { WeatherService } from '../services/weather.service';
       }
       .temp {
         font-size: 25px;
+      }
+      h4{
+        display:block;
       }
     `,
   ],

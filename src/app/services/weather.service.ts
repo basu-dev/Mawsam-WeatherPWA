@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Observable, of, Subject, throwError, Subscription } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
 import {
   PartialWeather,
-  CurrentWeather,
   OneWeather,
   Place,
 } from '../model/weather';
@@ -12,9 +11,11 @@ import {
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
   APP_ID = '2f111e4b3f03c4f196c708bc43c33f8b';
-  weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
+  // weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
+  weatherUrl = 'http://localhost:3000/onekathmandu';
   cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
-  currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  // currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  currentWeatherUrl = 'http://localhost:3000/nuwakot';
   MY_API = 'AIzaSyCJ67H5QBLVTdO2pnmEmC2THDx95rWyC1g';
   POSITION_KEY = '26089ac1886b2def99aaddd358ce12e7';
   lat = null;
@@ -32,6 +33,8 @@ export class WeatherService {
     if (!this.geoTaken && navigator.geolocation) {
       this.getPosition().then((x) => {
         this.get(x);
+      }).catch(e=>{
+        this.get(e);
       });
     }
   }
@@ -39,6 +42,7 @@ export class WeatherService {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (resp) => {
+          console.log("success");
           resolve({
             lon: resp.coords.longitude,
             lat: resp.coords.latitude,
@@ -46,12 +50,14 @@ export class WeatherService {
           });
         },
         (err) => {
+          console.log("eror")
           resolve({ lon: 27.71, lat: 85.31, name: 'Your Location' });
         }
       );
     });
   }
   get(city?: Place): void {
+    console.log("getin");
     this.lat = city.lat;
     this.lon = city.lon;
     const result = this.httpClient
@@ -84,7 +90,7 @@ export class WeatherService {
       this.subject.next({ ...this.weatherData });
     });
   }
-  getTime(unixtime?: number): string {
+  getTime(unixtime?: number): {time: string, day: number} {
     const a = unixtime > 0 ? new Date(unixtime * 1000) : new Date();
     let hours = a.getHours();
     let sit = 'AM';
@@ -92,7 +98,7 @@ export class WeatherService {
       hours = hours - 12;
       sit = 'PM';
     }
-    return `${hours}: ${a.getMinutes()} ${sit}`;
+    return {time:`${hours}: ${a.getMinutes()} ${sit}`,day: a.getDay()};
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

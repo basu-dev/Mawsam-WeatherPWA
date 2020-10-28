@@ -8,6 +8,8 @@
 :root{
     --primary-font:'Verdana';
     --secondary-font:'Big Shoulders Text';
+    --light-background:#00000033;
+    --semilight-background:#00000077;
 }
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;

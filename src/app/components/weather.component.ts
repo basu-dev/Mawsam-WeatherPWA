@@ -36,6 +36,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public time: string;
   ngOnInit(): void {
     // this.weatherService.getGeolocation();
+    this.weatherService.get({lat:32.34,lon:23.23,name:"Location"});
     this.citySubscripton = this.weatherService.citySub.subscribe((x: Place): void => {
     if(x.lat){
       this.weatherService.get(x);
@@ -57,7 +58,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
           lon: result.lon,
           added: result.added
         };
-        this.time = this.weatherService.getTime(result.current.dt);
+        this.time = this.weatherService.getTime(result.current.dt).time;
       },
       (err) => console.log('Error', err)
     );
