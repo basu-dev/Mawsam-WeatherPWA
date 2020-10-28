@@ -24,11 +24,10 @@ import { WeatherService } from '../services/weather.service';
       [(ngModel)]="autocompleteInput"
       #addresstext
     />
-    <city-detail
+    <app-citydetail
       *ngFor="let city of cities"
       (click)="loadWeather(city)"
-      [city]="city"
-    ></city-detail>
+      [city]="city"></app-citydetail>
   `,
   styles: [
     `
@@ -59,7 +58,6 @@ export class CityComponent implements AfterViewInit, OnInit {
   public cities: Place[];
   constructor(public service: WeatherService) {}
   ngOnInit(): void {
-    this.service.getGeolocation();
     this.citiesSub = this.service.cityUpdatedSub.subscribe(
       (cities: Place[]) => {
         this.cities = cities;
@@ -68,10 +66,6 @@ export class CityComponent implements AfterViewInit, OnInit {
   }
   ngAfterViewInit(): void {
     this.service.getCities();
-    // console.log('afterinit')
-    // let a = this.service.getDefaultCity();
-    // a=a?a:this.cities[0]?this.cities[0]:null;
-    // this.service.citySub.next({...a});
     this.getPlaceAutocomplete();
   }
   loadWeather(city: Place): void {

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1603800101734,
+  "timestamp": 1603873045194,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.8524a344a9d0ec43219f.js",
+        "/main.7ecdb10c54eaaed322b0.js",
         "/manifest.webmanifest",
         "/polyfills.35a5ca1855eb057f016a.js",
         "/runtime.acf0dec4155e77772545.js",
-        "/styles.cf5505f897ab187f51b8.css"
+        "/styles.28d0263f6842983d97b6.css"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/css2\\?family=Big\\+Shoulders\\+Text:wght@100&display=swap",
@@ -48,11 +48,12 @@
     {
       "name": "weather",
       "patterns": [
-        "https:\\/\\/api\\.openweathermap\\.org\\/data\\/2\\.5\\/.*"
+        "https:\\/\\/api\\.openweathermap\\.org\\/data\\/2\\.5\\/.*",
+        "http:\\/\\/localhost:3000\\/.*"
       ],
-      "strategy": "performance",
+      "strategy": "freshness",
       "maxSize": 10,
-      "maxAge": 432000000,
+      "maxAge": 864000000,
       "timeoutMs": 5000,
       "cacheQueryOptions": {
         "ignoreVary": true
@@ -70,12 +71,12 @@
     "/assets/icons/icon-72x72.png": "560262fc68070c24b9e986bbfd308eaf041d80c4",
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/favicon.ico": "f936f4169d52a070839bfcc5e9ae7e8c6b097f5d",
-    "/index.html": "a0d1ea0835dbbe076df4716f4054a6310fa49e9a",
-    "/main.8524a344a9d0ec43219f.js": "24b2aff7ce6ed36b003a6a4399eab46124ddc335",
-    "/manifest.webmanifest": "4d89c2792ba8faf68aae3ff3ecf728002b68a479",
+    "/index.html": "680bf36c785b858dd63b30431b96b9cecb432f92",
+    "/main.7ecdb10c54eaaed322b0.js": "d776f3c3a491f6e32cf15c52590f3105cda8728d",
+    "/manifest.webmanifest": "3b7b0b525440aa24503307513e79a3459e440165",
     "/polyfills.35a5ca1855eb057f016a.js": "578360d24ce37383f261c7ef63b1f822d28e8dde",
     "/runtime.acf0dec4155e77772545.js": "a9aafcf49f49145093fc831efd9b8e2f6c71bb9c",
-    "/styles.cf5505f897ab187f51b8.css": "9bb866a54b372ead6cceebef5e5e92f334c88d8c"
+    "/styles.28d0263f6842983d97b6.css": "d6cfaa94597905344d3e9d6e6ba2eae9e3754b9a"
   },
   "navigationUrls": [
     {

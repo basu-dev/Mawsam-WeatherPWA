@@ -1,27 +1,24 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
-import {
-  PartialWeather,
-  OneWeather,
-  Place,
-} from '../model/weather';
+import { PartialWeather, OneWeather, Place } from '../model/weather';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
-  APP_ID = '2f111e4b3f03c4f196c708bc43c33f8b';
+  APP_ID = environment.APP_ID;
   // weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
   weatherUrl = 'http://localhost:3000/onekathmandu';
   cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
   // currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-  currentWeatherUrl = 'http://localhost:3000/nuwakot';
-  MY_API = 'AIzaSyCJ67H5QBLVTdO2pnmEmC2THDx95rWyC1g';
-  POSITION_KEY = '26089ac1886b2def99aaddd358ce12e7';
+  currentWeatherUrl = 'http://localhost:3000/thapathali';
+  MY_API = environment.MY_API;
+  POSITION_KEY = environment.POSITION_KEY;
   lat = null;
   lon = null;
   geoTaken = false;
-  public weatherData: OneWeather = null;
+  public weatherData: OneWeather;
   // subjects
   public subject = new Subject<any>();
   public citySub = new Subject<Place>();
@@ -29,20 +26,23 @@ export class WeatherService {
   public selectedCities: Place[] = [];
 
   constructor(public httpClient: HttpClient) {}
+  // get current locations 
   public getGeolocation(): void {
     if (!this.geoTaken && navigator.geolocation) {
-      this.getPosition().then((x) => {
-        this.get(x);
-      }).catch(e=>{
-        this.get(e);
-      });
+      this.getPosition()
+        .then((x) => {
+          this.get(x);
+        })
+        .catch((e) => {
+          this.get(e);
+        });
     }
   }
   getPosition(): Promise<Place> {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (resp) => {
-          console.log("success");
+          console.log('success');
           resolve({
             lon: resp.coords.longitude,
             lat: resp.coords.latitude,
@@ -50,14 +50,15 @@ export class WeatherService {
           });
         },
         (err) => {
-          console.log("eror")
+          console.log(err);
           resolve({ lon: 27.71, lat: 85.31, name: 'Your Location' });
         }
       );
     });
   }
+  // get weather
   get(city?: Place): void {
-    console.log("getin");
+    console.log('getin');
     this.lat = city.lat;
     this.lon = city.lon;
     const result = this.httpClient
@@ -71,26 +72,44 @@ export class WeatherService {
         },
       })
       .pipe(
-        map((x: OneWeather) => {
+        map((x: any) => {
+          console.log('Unprocessed Data: ',x);
+          x.current.dt = this.getTime(x.current.dt);
           if (this.cityAlreadyAdded(city) > -1) {
             x.added = true;
           }
           return { ...x, timezone: `${city.name}` };
         }),
-        // map((x: OneWeather)=>{
-        //     const city: Place = {lat: this.lat, lon: this.lon};
-        //     const name = this.inSelectedCity({...city});
-        //     x.timezone = name ? name : x.timezone;
-        //     return x;
-        // }),
         catchError(this.handleError<OneWeather>('get', {}))
-      );
-    const subsc = result.subscribe((data) => {
+      )
+      .subscribe((data) => {
       this.weatherData = data;
       this.subject.next({ ...this.weatherData });
     });
   }
-  getTime(unixtime?: number): {time: string, day: number} {
+  public getCurrentWeather(city: Place): Observable<PartialWeather> {
+    const weather: PartialWeather = {};
+    return this.httpClient
+      .get<any>(this.currentWeatherUrl, {
+        params: {
+          lat: city.lat.toString(),
+          lon: city.lon.toString(),
+          APPID: this.APP_ID,
+          units: 'metric',
+          exclude: 'minutely',
+        },
+      })
+      .pipe(
+        map((x: any) => {
+          weather.current = Math.round(x.main.temp);
+          weather.max_temp = Math.round(x.main.temp_max);
+          weather.min_temp = Math.round(x.main.temp_min);
+          
+          return weather;
+        })
+      );
+  }
+  getTime(unixtime?: number): { time: string; day: string } {
     const a = unixtime > 0 ? new Date(unixtime * 1000) : new Date();
     let hours = a.getHours();
     let sit = 'AM';
@@ -98,7 +117,19 @@ export class WeatherService {
       hours = hours - 12;
       sit = 'PM';
     }
-    return {time:`${hours}: ${a.getMinutes()} ${sit}`,day: a.getDay()};
+    return { time: `${hours}: ${a.getMinutes()} ${sit}`, day: this.parseDay(a.getDay()) };
+  }
+  parseDay(day: number): string{
+    const days = {
+      1: 'Monday',
+      2: 'Tuesday',
+      3: 'Wednesday',
+      4: 'Thursday',
+      5: 'Friday',
+      6: 'Saturday',
+      7: 'Sunday'
+    };
+    return days[day];
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
@@ -118,16 +149,6 @@ export class WeatherService {
       this.dispatchCities();
       this.setCities();
     }
-  }
-  private inSelectedCity(city: Place): string | void {
-    this.selectedCities.forEach((x, i) => {
-      if (
-        x.lat.toFixed(1) === city.lat.toFixed(1) &&
-        x.lon.toFixed(1) === city.lat.toFixed(1)
-      ) {
-        return x.name;
-      }
-    });
   }
   private cityAlreadyAdded(city: Place): number {
     let index = -1;
@@ -164,26 +185,5 @@ export class WeatherService {
   }
   public getDefaultCity(): any {
     return JSON.parse(localStorage.getItem('default'));
-  }
-  public getCurrentWeather(city: Place): Observable<PartialWeather> {
-    const weather: PartialWeather = {};
-    return this.httpClient
-      .get<any>(this.currentWeatherUrl, {
-        params: {
-          lat: city.lat.toString(),
-          lon: city.lon.toString(),
-          APPID: this.APP_ID,
-          units: 'metric',
-          exclude: 'minutely',
-        },
-      })
-      .pipe(
-        map((x: any) => {
-          weather.current = Math.round(x.main.temp);
-          weather.max_temp = Math.round(x.main.temp_max);
-          weather.min_temp = Math.round(x.main.temp_min);
-          return weather;
-        })
-      );
   }
 }

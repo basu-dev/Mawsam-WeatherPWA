@@ -1,10 +1,10 @@
 import { Subscription } from 'rxjs';
-import { OneWeather, CurrentWeather } from './../model/weather';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { WeatherService } from '../services/weather.service';
+import { OneWeather, CurrentWeather } from '../../model/weather';
+import { Component, OnDestroy, OnInit} from '@angular/core';
+import { WeatherService } from '../../services/weather.service';
 
 @Component({
-  selector: 'app-weather-detail',
+  selector: 'app-weatherdetail',
   template: `
   <div>
       <h4 *ngIf="current">Weather Detail</h4>

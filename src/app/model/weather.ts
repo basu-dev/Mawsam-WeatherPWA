@@ -11,7 +11,10 @@ export interface CurrentWeather {
   clouds: number;
   dew_point: number;
   time?: string;
-  dt: number;
+  dt: {
+    time:string,
+    day:string
+  };
   feels_like: number;
   humidity: number;
   pressure: number;

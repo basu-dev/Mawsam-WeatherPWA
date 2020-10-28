@@ -1,7 +1,7 @@
 {
   "name": "Mawsam",
   "short_name": "Mawsam",
-  "theme_color": "#29a1d8",
+  "theme_color": "#35a9de",
   "background_color": "#f0f0f0",
   "display": "standalone",
   "scope": "./",

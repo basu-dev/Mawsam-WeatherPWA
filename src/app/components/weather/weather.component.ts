@@ -1,5 +1,5 @@
-import { UIService } from './../services/ui.service';
-import { Place, OneWeather } from './../model/weather';
+import { UIService } from '../../services/ui.service';
+import { Place, OneWeather } from '../../model/weather';
 import {
   Component,
   ElementRef,
@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { WeatherService } from '../services/weather.service';
-import { CurrentWeather, DailyWeather } from '../model/weather';
+import { WeatherService } from '../../services/weather.service';
+import { CurrentWeather, DailyWeather } from '../../model/weather';
 
 @Component({
   selector: 'app-weather',
@@ -18,9 +18,10 @@ import { CurrentWeather, DailyWeather } from '../model/weather';
   templateUrl: 'weather.component.html',
 })
 export class WeatherComponent implements OnInit, OnDestroy {
-  constructor(public weatherService: WeatherService,
-              public uiSerivce: UIService
-    ) {}
+  constructor(
+    public weatherService: WeatherService,
+    public uiSerivce: UIService
+  ) {}
   @ViewChild('default') default: ElementRef;
   public placeholder = '';
   public city: string;
@@ -33,18 +34,21 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public sub: Subscription;
   public citySubscripton: Subscription;
   public cityDetail: Place;
-  public time: string;
+  public time: { time: string, day: string};
   ngOnInit(): void {
-    // this.weatherService.getGeolocation();
-    this.weatherService.get({lat:32.34,lon:23.23,name:"Location"});
-    this.citySubscripton = this.weatherService.citySub.subscribe((x: Place): void => {
-    if(x.lat){
-      this.weatherService.get(x);
-    }
-    this.cityDetail = x;
-    });
+    // this line below is for offline testing should be removed whilest access to internet
+    // this.weatherService.get({ lat: 32.34, lon: 23.23, name: 'Location' });
+    this.citySubscripton = this.weatherService.citySub.subscribe(
+      (x: Place): void => {
+        if (x.lat) {
+          this.weatherService.get(x);
+        }
+        this.cityDetail = x;
+      }
+    );
     this.sub = this.weatherService.subject.subscribe(
       (result: OneWeather) => {
+        console.log('processed data: ',result);
         this.weather = result.current;
         this.city = result.timezone;
         this.daily = result.daily;
@@ -56,23 +60,23 @@ export class WeatherComponent implements OnInit, OnDestroy {
           name: result.timezone,
           lat: result.lat,
           lon: result.lon,
-          added: result.added
+          added: result.added,
         };
-        this.time = this.weatherService.getTime(result.current.dt).time;
+        this.time = result.current.dt;
       },
       (err) => console.log('Error', err)
     );
   }
-  addCity(): void{
+  addCity(): void {
     this.cityDetail.added = true;
-    this.weatherService.addCity({...this.cityDetail});
+    this.weatherService.addCity({ ...this.cityDetail });
   }
-  removeCity(): void{
+  removeCity(): void {
     this.cityDetail.added = false;
-    this.weatherService.removeCity({...this.cityDetail});
+    this.weatherService.removeCity({ ...this.cityDetail });
   }
-  openSidebar(): void{
-    this.uiSerivce.sideBarSub.next({open:true});
+  openSidebar(): void {
+    this.uiSerivce.sideBarSub.next({ open: true });
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();

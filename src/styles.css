@@ -25,7 +25,7 @@ color:white;
 }
 app-root{
     display:grid;
-    grid-template-columns: 4fr 5fr 4fr;
+    grid-template-columns: 4fr 0fr 5fr 4fr;
 }
 
 app-cities{
@@ -52,9 +52,13 @@ app-cities{
    }
    
 }
-app-weather-detail{
+app-weatherdetail{
     padding:10px;
     text-align: center;
+}
+app-dailyweather{
+    display:flex;
+    flex-shrink: initial;
 }
 /* 
 h1,h2,h3,h4,h5{
