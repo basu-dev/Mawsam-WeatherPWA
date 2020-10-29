@@ -38,6 +38,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // this line below is for offline testing should be removed whilest access to internet
     // this.weatherService.get({ lat: 32.34, lon: 23.23, name: 'Location' });
+    this.weatherService.dispatchWeatherData();
     this.citySubscripton = this.weatherService.citySub.subscribe(
       (x: Place): void => {
         if (x.lat) {
@@ -48,7 +49,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
     );
     this.sub = this.weatherService.subject.subscribe(
       (result: OneWeather) => {
-        console.log('processed data: ',result);
         this.weather = result.current;
         this.city = result.timezone;
         this.daily = result.daily;

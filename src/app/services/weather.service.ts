@@ -84,8 +84,11 @@ export class WeatherService {
       )
       .subscribe((data) => {
       this.weatherData = data;
-      this.subject.next({ ...this.weatherData });
+      this.dispatchWeatherData();
     });
+  }
+  public dispatchWeatherData(): void{
+    this.subject.next({...this.weatherData});
   }
   public getCurrentWeather(city: Place): Observable<PartialWeather> {
     const weather: PartialWeather = {};
@@ -104,7 +107,6 @@ export class WeatherService {
           weather.current = Math.round(x.main.temp);
           weather.max_temp = Math.round(x.main.temp_max);
           weather.min_temp = Math.round(x.main.temp_min);
-          
           return weather;
         })
       );

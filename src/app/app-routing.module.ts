@@ -1,3 +1,4 @@
+import { DailyWeatherComponent } from './components/dailyWeather/daily-weather.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { WeatherComponent } from './components/weather/weather.component';
@@ -7,13 +8,13 @@ const routes: Routes = [
     path: '',
     component: WeatherComponent,
   },
-  {
-    path: 'daily',
-    loadChildren: () =>
-      import('./components/dailyWeather/daily-weather.module').then(
-        (m) => m.DailyWeatherModule
-      ),
-  },
+  // {
+  //   path: 'daily',
+  //   loadChildren: () =>
+  //     import('./components/dailyWeather/daily-weather.module').then(
+  //       (m) => m.DailyWeatherModule
+  //     ),
+  // },
 ];
 
 @NgModule({

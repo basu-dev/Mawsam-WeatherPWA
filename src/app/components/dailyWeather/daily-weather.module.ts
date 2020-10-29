@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
-    path: '',
+    path: 'daily',
     component: DailyWeatherComponent,
   },
 ];
@@ -14,6 +14,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes)
 ],
-  exports: [DailyWeatherComponent],
+  exports: [
+      RouterModule
+    ],
 })
 export class DailyWeatherModule {}

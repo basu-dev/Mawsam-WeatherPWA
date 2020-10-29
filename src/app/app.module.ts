@@ -1,6 +1,6 @@
+import { DailyWeatherModule } from './components/dailyWeather/daily-weather.module';
 import { WeatherDetailComponent } from './components/weather/weather-detail.component';
 import { SideBarDirective } from './directives/sidebar.directive';
-import { UIService } from './services/ui.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -12,7 +12,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { CityDetailComponent } from './components/city-detail.component';
 import { WeatherComponent } from './components/weather/weather.component';
-import { WeatherService } from './services/weather.service';
 import {  CityComponent } from './components/cities.component';
 
 
@@ -23,7 +22,7 @@ import {  CityComponent } from './components/cities.component';
     CityComponent,
     CityDetailComponent,
     SideBarDirective,
-    WeatherDetailComponent
+    WeatherDetailComponent,
 
   ],
   imports: [
@@ -31,12 +30,10 @@ import {  CityComponent } from './components/cities.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    DailyWeatherModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [
-    WeatherService,
-    UIService
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
