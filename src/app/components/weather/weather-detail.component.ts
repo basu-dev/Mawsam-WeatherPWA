@@ -7,7 +7,7 @@ import { WeatherService } from '../../services/weather.service';
   selector: 'app-weatherdetail',
   template: `
   <div>
-      <h4 *ngIf="current">Current Weather</h4>
+      <h4 *ngIf="current">Current Data</h4><br>
       <div *ngIf="current" class="weather-detail">
         <div>
             <small>Sunrise</small>
@@ -18,7 +18,7 @@ import { WeatherService } from '../../services/weather.service';
             <div class="info">{{sunset}}</div>
         </div>
         <div>
-            <small>Real Feel</small>
+            <small>Feels Like</small>
             <div class="info">{{current.feels_like}}&deg;C</div>
         </div>
         <div>
@@ -47,7 +47,6 @@ import { WeatherService } from '../../services/weather.service';
   `,
   styles: [`
     .weather-detail{
-        margin-top:10px;
         text-align:left;
         background:var(--light-background);
         border-radius:10px;

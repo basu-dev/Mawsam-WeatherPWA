@@ -41,7 +41,7 @@ export interface DailyWeather {
   clouds: number;
   dew_point: number;
   dt: number;
-  feels_like: { day: number; night: number; eve: number; morn: number }
+  feels_like: { day: number; night: number; eve: number; morn: number } | any;
   humidity: number;
   visibility: number;
   pop: number;

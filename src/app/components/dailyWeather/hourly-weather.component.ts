@@ -1,14 +1,12 @@
-import { DailyWeather, OneWeather } from './../../model/weather';
-import { Observable, Subscription, of } from 'rxjs';
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription, Observable, of } from 'rxjs';
+import { DailyWeather, OneWeather } from 'src/app/model/weather';
 import { WeatherService } from 'src/app/services/weather.service';
-
 @Component({
-    template: `
-        <h4>1 Week Forecast<h4><br/>
-        <app-onedayweather *ngFor="let item of (dailyData | async)"  [current]='item'></app-onedayweather>`,
+    template:`<h4>Hourly Forecast<h4><br/>
+    <app-onedayweather *ngFor="let item of (dailyData | async)"  [current]='item' unitWeatherType = 'hourly'></app-onedayweather>`
 })
-export class DailyWeatherComponent implements OnInit, OnDestroy {
+export class HourlyWeatherComponent implements OnInit, OnDestroy{
     constructor(private weatherService: WeatherService){}
     private weatherSub: Subscription;
     public dailyData: Observable<DailyWeather[]>;
@@ -16,7 +14,7 @@ export class DailyWeatherComponent implements OnInit, OnDestroy {
         this.weatherSub = this.weatherService.subject.subscribe(
             (result: OneWeather) => {
                 console.log('hey')
-                this.dailyData = of(result.daily);
+                this.dailyData = of(result.hourly);
             },
             (err)=>console.log('Error in fetching data',err)
             );

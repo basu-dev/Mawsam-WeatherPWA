@@ -5,15 +5,19 @@ import { DailyWeather } from 'src/app/model/weather';
   selector: 'app-onedayweather',
   template: `
     <div>
-      <div *ngIf="current" class="day">{{ date.day }} <span>{{ date.date }}</span></div>
+      <div *ngIf="current" class="day">{{ date.day }} <span>{{ time }}</span></div>
       <div *ngIf="current" class="weather-detail">
         <div>
           <small>Weather</small>
           <div class="info">{{ current.weather[0].main }}</div>
         </div>
+        <div *ngIf="isHourly">
+          <small>Temperature</small>
+          <div class="info">{{ current.temp }}&deg;C</div>
+        </div>
         <div>
-          <small>Real Feel</small>
-          <div class="info">{{ current.feels_like.day }}&deg;C</div>
+          <small>Feels Like</small>
+          <div class="info">{{ feelsLike }}&deg;C</div>
         </div>
         <div>
           <small>Humidity</small>
@@ -27,7 +31,7 @@ import { DailyWeather } from 'src/app/model/weather';
           <small>Pressure</small>
           <div class="info">{{ current.pressure }}hPa</div>
         </div>
-        <div>
+        <div *ngIf="!isHourly">
           <small>UV Index</small>
           <div class="info">{{ current.uvi }}</div>
         </div>
@@ -36,6 +40,9 @@ import { DailyWeather } from 'src/app/model/weather';
   `,
   styles: [
     `
+    *{
+        font-family: Verdana;
+    }
       .day{
           display:flex;
           justify-content:space-between;
@@ -66,9 +73,24 @@ import { DailyWeather } from 'src/app/model/weather';
 })
 export class OneDayWeatherComponent implements OnInit {
   @Input() public current: DailyWeather;
+  @Input() public unitWeatherType: string;
+  public time: string;
   public date: { day: string; time: string; date?: string };
+  public isHourly = false;
+  public feelsLike: any;
   constructor(private weatherService: WeatherService) {}
   ngOnInit(): void {
+    console.log(this.unitWeatherType);
     this.date = this.weatherService.getTime(this.current.dt);
+    if(this.unitWeatherType === 'hourly'){
+        this.time = this.date.time;
+        this.feelsLike = this.current.feels_like;
+        this.isHourly = true;
+    }
+    else{
+        this.time = this.date.date;
+        this.feelsLike = this.current.feels_like.day;
+    }
+    this.time = (this.unitWeatherType === 'hourly') ?  this.date.time : this.date.date;
   }
 }
