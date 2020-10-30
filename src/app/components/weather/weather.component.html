@@ -25,13 +25,13 @@
         <div><span><img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'></span> Today .
         {{daily[0].weather[0].main}}</div>
         <div>{{daily[0].temp.max| number : '1.0-0'}}&deg; / {{daily[0].temp.min| number : '1.0-0'}}&deg;</div>
-        <div><span><img src='https://openweathermap.org/img/wn/{{tomorrowIcon}}@2x.png'></span> Tomorrow 
+        <div><span><img src='https://openweathermap.org/img/wn/{{tomorrowIcon}}@2x.png'></span> Tomorrow . 
         {{daily[1].weather[0].main}} </div><div> {{daily[1].temp.max| number : '1.0-0'}}&deg; / {{daily[1].temp.min| number : '1.0-0'}}&deg;</div>
-        <div><span><img src='https://openweathermap.org/img/wn/{{nextDayIcon}}@2x.png'></span> Next Day .
+        <div><span><img src='https://openweathermap.org/img/wn/{{nextDayIcon}}@2x.png'></span> {{thirdDay}} .
          {{daily[2].weather[0].main}} </div><div> {{daily[2].temp.max| number : '1.0-0'}}&deg; / {{daily[2].temp.min| number : '1.0-0'}}&deg;</div>
     </div>
     <div class="forecast-btn-place">
-        <a class="weekly-forecast-btn" routerLink='/daily'>1 Week Forecast</a>
+        <a class="weekly-forecast-btn" routerLink='forecast/daily'>1 Week Forecast</a>
     </div>
 </div>
 

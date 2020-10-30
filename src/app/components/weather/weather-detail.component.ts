@@ -44,7 +44,7 @@ import { WeatherService } from '../../services/weather.service';
         </div>
     </div>
     <div *ngIf="showHourlyBtn" class="forecast-btn-place">
-        <a class="weekly-forecast-btn" routerLink='/hourly'>Hourly Forecast</a>
+        <a class="weekly-forecast-btn" routerLink='forecast/hourly'>Hourly Forecast</a>
     </div>
 </div>
 

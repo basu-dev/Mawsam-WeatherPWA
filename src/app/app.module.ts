@@ -1,4 +1,4 @@
-import { DailyWeatherModule } from './components/dailyWeather/daily-weather.module';
+// import { DailyWeatherModule } from './components/dailyWeather/daily-weather.module';
 import { WeatherDetailComponent } from './components/weather/weather-detail.component';
 import { SideBarDirective } from './directives/sidebar.directive';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,7 +30,7 @@ import { CityComponent } from './components/cities.component';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    DailyWeatherModule,
+    // DailyWeatherModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

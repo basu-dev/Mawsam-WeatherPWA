@@ -35,6 +35,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public citySubscripton: Subscription;
   public cityDetail: Place;
   public time: { time: string, day: string};
+  public thirdDay: string;
   ngOnInit(): void {
     // this line below is for offline testing should be removed whilest access to internet
     // this.weatherService.get({ lat: 32.34, lon: 23.23, name: 'Location' });
@@ -65,6 +66,7 @@ export class WeatherComponent implements OnInit, OnDestroy {
           added: result.added,
         };
         this.time = result.current.dt;
+        this.thirdDay = this.weatherService.getTime(result.daily[2].dt).day;
       },
       (err) => console.log('Error', err)
     );
