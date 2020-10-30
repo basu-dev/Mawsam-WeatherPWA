@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 import { CityDetailComponent } from './components/city-detail.component';
 import { WeatherComponent } from './components/weather/weather.component';
-import {  CityComponent } from './components/cities.component';
+import { CityComponent } from './components/cities.component';
 
 
 @NgModule({

@@ -1,14 +1,2 @@
 
-    <div class="column" *ngFor="let item of (dailyData | async)">
-    <div>
-        {{item.dt}}
-    </div>
-    <div>{{item.weather[0].main}}</div>
-    <div>
-        {{item.temp.max }}  
-    </div>
-    <div>
-        {{item.temp.min}}
-    </div>
-    <div>{{item.wind_speed}}</div>
-    </div>
+    <app-onedayweather *ngFor="let item of (dailyData | async)"  [current]='item'></app-onedayweather>

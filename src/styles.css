@@ -19,6 +19,7 @@ background: -webkit-linear-gradient(left,  #63b6db 0%,#309dcf 100%); /* Chrome10
 background: linear-gradient(to right,  #48b6e9 0%,#249dd5 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63b6db', endColorstr='#309dcf',GradientType=1 ); /* IE6-9 */
 color:white;
+overflow: hidden;
 }
 ::-webkit-scrollbar{
     width: 0;
@@ -52,13 +53,16 @@ app-cities{
    }
    
 }
+
 app-weatherdetail{
     padding:10px;
     text-align: center;
 }
-app-dailyweather{
-    display:flex;
-    flex-shrink: initial;
+
+ng-component{
+    margin-top: 10px;
+    height: 100vh;
+    overflow: scroll;
 }
 /* 
 h1,h2,h3,h4,h5{

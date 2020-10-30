@@ -1,3 +1,4 @@
+import { OneDayWeatherComponent } from './one-day-weather.component';
 import { DailyWeatherComponent } from './daily-weather.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -6,16 +7,20 @@ const routes: Routes = [
   {
     path: 'daily',
     component: DailyWeatherComponent,
+
   },
 ];
 @NgModule({
-  declarations: [DailyWeatherComponent],
+  declarations: [DailyWeatherComponent,
+                OneDayWeatherComponent
+],
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
 ],
   exports: [
-      RouterModule
+      RouterModule,
+      OneDayWeatherComponent
     ],
 })
 export class DailyWeatherModule {}

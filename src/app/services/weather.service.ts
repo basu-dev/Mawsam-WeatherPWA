@@ -111,7 +111,7 @@ export class WeatherService {
         })
       );
   }
-  getTime(unixtime?: number): { time: string; day: string } {
+  getTime(unixtime?: number): { time: string; day: string; date?: string } {
     const a = unixtime > 0 ? new Date(unixtime * 1000) : new Date();
     let hours = a.getHours();
     let sit = 'AM';
@@ -119,17 +119,19 @@ export class WeatherService {
       hours = hours - 12;
       sit = 'PM';
     }
-    return { time: `${hours}: ${a.getMinutes()} ${sit}`, day: this.parseDay(a.getDay()) };
+    const month = a.toString().split(' ')[1];
+    const  day = a.getDate();
+    return { time: `${hours}: ${a.getMinutes()} ${sit}`, day: this.parseDay(a.getDay()) , date: `${month} ${day}` };
   }
   parseDay(day: number): string{
     const days = {
-      1: 'Monday',
-      2: 'Tuesday',
-      3: 'Wednesday',
-      4: 'Thursday',
-      5: 'Friday',
-      6: 'Saturday',
-      7: 'Sunday'
+      0: 'Monday',
+      1: 'Tuesday',
+      2: 'Wednesday',
+      3: 'Thursday',
+      4: 'Friday',
+      5: 'Saturday',
+      6: 'Sunday'
     };
     return days[day];
   }
