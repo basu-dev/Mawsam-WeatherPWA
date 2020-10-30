@@ -1,3 +1,4 @@
+import { UIService } from './../../services/ui.service';
 import { WeatherService } from 'src/app/services/weather.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { DailyWeather } from 'src/app/model/weather';
@@ -5,7 +6,7 @@ import { DailyWeather } from 'src/app/model/weather';
   selector: 'app-onedayweather',
   template: `
     <div>
-      <div *ngIf="current" class="day">{{ date.day }} <span>{{ time }}</span></div>
+      <div *ngIf="current" class="day">{{ time }} <span>{{ date.day }}</span></div>
       <div *ngIf="current" class="weather-detail">
         <div>
           <small>Weather</small>
@@ -78,7 +79,7 @@ export class OneDayWeatherComponent implements OnInit {
   public date: { day: string; time: string; date?: string };
   public isHourly = false;
   public feelsLike: any;
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService, private uiSerivce: UIService) {}
   ngOnInit(): void {
     console.log(this.unitWeatherType);
     this.date = this.weatherService.getTime(this.current.dt);
@@ -86,11 +87,17 @@ export class OneDayWeatherComponent implements OnInit {
         this.time = this.date.time;
         this.feelsLike = this.current.feels_like;
         this.isHourly = true;
+        this.uiSerivce.hourlyButtonSub.next(false);
     }
     else{
         this.time = this.date.date;
         this.feelsLike = this.current.feels_like.day;
     }
     this.time = (this.unitWeatherType === 'hourly') ?  this.date.time : this.date.date;
+  }
+  ngOnDestroy(): void{
+    if(this.isHourly){
+      this.uiSerivce.hourlyButtonSub.next(true);
+    }
   }
 }

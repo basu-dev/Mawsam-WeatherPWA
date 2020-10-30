@@ -5,4 +5,5 @@ import { Subject } from 'rxjs';
 export class UIService {
     constructor() { }
 public sideBarSub = new Subject<any>();
+public hourlyButtonSub = new Subject<boolean>();
 }

@@ -24,6 +24,25 @@ color:white;
 ::-webkit-scrollbar{
     width: 0;
 }
+.forecast-btn-place{
+    padding-top:20px;
+    display:flex;
+    justify-content: center;
+}
+.weekly-forecast-btn{
+    width:300px;
+    height:50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:40px;
+    background:var(--light-background);
+    margin:0;
+    cursor: pointer;
+    text-decoration: none;
+    color:white;
+    
+} 
 app-root{
     display:grid;
     grid-template-columns: 4fr 0fr 5fr 4fr;

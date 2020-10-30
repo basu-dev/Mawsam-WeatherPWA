@@ -1,3 +1,4 @@
+import { UIService } from './../../services/ui.service';
 import { Subscription } from 'rxjs';
 import { OneWeather, CurrentWeather } from '../../model/weather';
 import { Component, OnDestroy, OnInit} from '@angular/core';
@@ -42,7 +43,11 @@ import { WeatherService } from '../../services/weather.service';
             <div class="info">{{current.visibility}}m</div>
         </div>
     </div>
+    <div *ngIf="showHourlyBtn" class="forecast-btn-place">
+        <a class="weekly-forecast-btn" routerLink='/hourly'>Hourly Forecast</a>
+    </div>
 </div>
+
 
   `,
   styles: [`
@@ -66,10 +71,11 @@ import { WeatherService } from '../../services/weather.service';
 `]
 })
 export class WeatherDetailComponent implements OnInit, OnDestroy {
-  constructor(public weatherService: WeatherService) {}
+  constructor(public weatherService: WeatherService, private uiService: UIService) {}
   public current: CurrentWeather;
   public sunrise: string;
   public sunset: string;
+  public showHourlyBtn = true;
   public weatherSubscription: Subscription;
   ngOnInit(): void {
     this.weatherSubscription = this.weatherService.subject.subscribe((x: OneWeather) => {
@@ -78,6 +84,7 @@ export class WeatherDetailComponent implements OnInit, OnDestroy {
         this.sunrise = this.weatherService.getTime(x.daily[0].sunrise).time;
         this.sunset = this.weatherService.getTime(x.daily[0].sunset).time;
     });
+    this.uiService.hourlyButtonSub.subscribe((showHourlyBtn: boolean)=>this.showHourlyBtn = showHourlyBtn);
 
   }
   ngOnDestroy(): void{
