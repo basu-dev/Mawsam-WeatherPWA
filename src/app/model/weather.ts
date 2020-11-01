@@ -12,8 +12,8 @@ export interface CurrentWeather {
   dew_point: number;
   time?: string;
   dt: {
-    time:string,
-    day:string
+    time: string;
+    day: string;
   };
   feels_like: number;
   humidity: number;

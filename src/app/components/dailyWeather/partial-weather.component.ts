@@ -1,24 +1,39 @@
 import { UIService } from './../../services/ui.service';
 import { WeatherService } from 'src/app/services/weather.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DailyWeather } from 'src/app/model/weather';
 @Component({
   selector: 'app-onedayweather',
   template: `
     <div>
-      <div *ngIf="current" class="day">{{ time }} <span>{{ date.day }}</span></div>
+      <div *ngIf="current" class="day">
+        {{ time }} <span>{{ date.day }}</span>
+      </div>
       <div *ngIf="current" class="weather-detail">
         <div>
           <small>Weather</small>
           <div class="info">{{ current.weather[0].main }}</div>
         </div>
-        <div *ngIf="isHourly">
+        <div>
           <small>Temperature</small>
-          <div class="info">{{ current.temp }}&deg;C</div>
+          <div class="info">
+            <span *ngIf="isHourly; else hourly">{{ temperature }}</span
+            ><span *ngIf="isHourly">&deg;C</span>
+          </div>
+          <ng-template #hourly
+            >{{ temperature.min }}&deg; /
+            {{ temperature.max }}&deg;</ng-template
+          >
         </div>
         <div>
           <small>Feels Like</small>
-          <div class="info">{{ feelsLike }}&deg;C</div>
+          <div class="info">
+            <span *ngIf="isHourly; else hourly">{{ feelsLike }}</span
+            ><span *ngIf="isHourly">&deg;C</span>
+          </div>
+          <ng-template #hourly
+            >{{ feelsLike.min }}&deg; / {{ feelsLike.max }}&deg;</ng-template
+          >
         </div>
         <div>
           <small>Humidity</small>
@@ -26,34 +41,30 @@ import { DailyWeather } from 'src/app/model/weather';
         </div>
         <div>
           <small>Wind Speed</small>
-          <div class="info">{{ current.wind_speed }}km/h</div>
+          <div class="info">{{ current.wind_speed }} km/h</div>
         </div>
         <div>
           <small>Pressure</small>
           <div class="info">{{ current.pressure }}hPa</div>
-        </div>
-        <div *ngIf="!isHourly">
-          <small>UV Index</small>
-          <div class="info">{{ current.uvi }}</div>
         </div>
       </div>
     </div>
   `,
   styles: [
     `
-    *{
+      * {
         font-family: Verdana;
-    }
-      .day{
-          display:flex;
-          justify-content:space-between;
-          padding:5px 20px;
-          background:var(--semilight-background);
-          border-radius: 10px 10px 0 0;
-          width:100%;
+      }
+      .day {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 20px;
+        background: var(--semilight-background);
+        border-radius: 10px 10px 0 0;
+        width: 100%;
       }
       .weather-detail {
-        margin:0 0 5px 0;
+        margin: 0 0 5px 0;
         text-align: left;
         background: var(--light-background);
         border-radius: 0 0 10px 10px;
@@ -72,31 +83,43 @@ import { DailyWeather } from 'src/app/model/weather';
     `,
   ],
 })
-export class OneDayWeatherComponent implements OnInit {
+export class OneDayWeatherComponent implements OnInit, OnDestroy {
   @Input() public current: DailyWeather;
   @Input() public unitWeatherType: string;
   public time: string;
   public date: { day: string; time: string; date?: string };
   public isHourly = false;
   public feelsLike: any;
-  constructor(private weatherService: WeatherService, private uiSerivce: UIService) {}
+  public temperature: any;
+  constructor(
+    private weatherService: WeatherService,
+    private uiSerivce: UIService
+  ) {}
   ngOnInit(): void {
-    console.log(this.unitWeatherType);
     this.date = this.weatherService.getTime(this.current.dt);
-    if(this.unitWeatherType === 'hourly'){
-        this.time = this.date.time;
-        this.feelsLike = this.current.feels_like;
-        this.isHourly = true;
-        this.uiSerivce.hourlyButtonSub.next(false);
+    if (this.unitWeatherType === 'hourly') {
+      this.time = this.date.time;
+      this.feelsLike = this.current.feels_like;
+      this.isHourly = true;
+      this.uiSerivce.hourlyButtonSub.next(false);
+      this.temperature = this.current.temp.toString();
+    } else {
+      this.time = this.date.date;
+      this.feelsLike = this.current.feels_like.day;
+      this.temperature = {
+        min: this.current.temp.max.toFixed(),
+        max: this.current.temp.min.toFixed(),
+      };
+      this.feelsLike = {
+        min: this.current.feels_like.day.toFixed(),
+        max: this.current.feels_like.night.toFixed(),
+      };
     }
-    else{
-        this.time = this.date.date;
-        this.feelsLike = this.current.feels_like.day;
-    }
-    this.time = (this.unitWeatherType === 'hourly') ?  this.date.time : this.date.date;
+    this.time =
+      this.unitWeatherType === 'hourly' ? this.date.time : this.date.date;
   }
-  ngOnDestroy(): void{
-    if(this.isHourly){
+  ngOnDestroy(): void {
+    if (this.isHourly) {
       this.uiSerivce.hourlyButtonSub.next(true);
     }
   }

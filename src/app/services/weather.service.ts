@@ -26,7 +26,7 @@ export class WeatherService {
   public selectedCities: Place[] = [];
 
   constructor(public httpClient: HttpClient) {}
-  // get current locations 
+  // get current locations
   public getGeolocation(): void {
     if (!this.geoTaken && navigator.geolocation) {
       this.getPosition()
@@ -58,7 +58,6 @@ export class WeatherService {
   }
   // get weather
   get(city?: Place): void {
-    console.log('getin');
     this.lat = city.lat;
     this.lon = city.lon;
     const result = this.httpClient
@@ -73,7 +72,7 @@ export class WeatherService {
       })
       .pipe(
         map((x: any) => {
-          console.log('Unprocessed Data: ',x);
+          console.log('Unprocessed Data: ', x);
           x.current.dt = this.getTime(x.current.dt);
           if (this.cityAlreadyAdded(city) > -1) {
             x.added = true;
@@ -83,12 +82,12 @@ export class WeatherService {
         catchError(this.handleError<OneWeather>('get', {}))
       )
       .subscribe((data) => {
-      this.weatherData = data;
-      this.dispatchWeatherData();
-    });
+        this.weatherData = data;
+        this.dispatchWeatherData();
+      });
   }
-  public dispatchWeatherData(): void{
-    this.subject.next({...this.weatherData});
+  public dispatchWeatherData(): void {
+    this.subject.next({ ...this.weatherData });
   }
   public getCurrentWeather(city: Place): Observable<PartialWeather> {
     const weather: PartialWeather = {};
@@ -120,10 +119,14 @@ export class WeatherService {
       sit = 'PM';
     }
     const month = a.toString().split(' ')[1];
-    const  day = a.getDate();
-    return { time: `${hours}: ${a.getMinutes()} ${sit}`, day: this.parseDay(a.getDay()) , date: `${month} ${day}` };
+    const day = a.getDate();
+    return {
+      time: `${hours}: ${a.getMinutes()} ${sit}`,
+      day: this.parseDay(a.getDay()),
+      date: `${month} ${day}`,
+    };
   }
-  parseDay(day: number): string{
+  parseDay(day: number): string {
     const days = {
       0: 'Monday',
       1: 'Tuesday',
@@ -131,7 +134,7 @@ export class WeatherService {
       3: 'Thursday',
       4: 'Friday',
       5: 'Saturday',
-      6: 'Sunday'
+      6: 'Sunday',
     };
     return days[day];
   }
