@@ -8,11 +8,11 @@ import { PartialWeather, OneWeather, Place } from '../model/weather';
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
   APP_ID = environment.APP_ID;
-  // weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
-  weatherUrl = 'http://localhost:3000/onekathmandu';
+  weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
+  // weatherUrl = 'http://localhost:3000/onekathmandu';
   cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
-  // currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-  currentWeatherUrl = 'http://localhost:3000/thapathali';
+  currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
+  // currentWeatherUrl = 'http://localhost:3000/thapathali';
   MY_API = environment.MY_API;
   POSITION_KEY = environment.POSITION_KEY;
   lat = null;
