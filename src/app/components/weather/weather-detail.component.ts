@@ -57,11 +57,14 @@ import { WeatherService } from '../../services/weather.service';
         text-align: left;
         background: var(--light-background);
         border-radius: 10px;
-        padding: 10px;
+        padding: 10px 20px;
         display: grid;
         width: 100%;
         grid-template-columns: 3fr 2fr;
         grid-gap: 1rem;
+      }
+      .weather-detail > div:nth-child(even) {
+        margin-left: 40px;
       }
       .weather-detail small {
         font-size: 0.8rem;
@@ -85,11 +88,14 @@ export class WeatherDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.weatherSubscription = this.weatherService.subject.subscribe(
       (x: OneWeather) => {
+        console.log("x",x);
         this.current = x.current;
         this.sunrise = this.weatherService.getTime(x.daily[0].sunrise).time;
         this.sunset = this.weatherService.getTime(x.daily[0].sunset).time;
       }
     );
+    this.weatherService.dispatchWeatherData();
+
     this.uiService.hourlyButtonSub.subscribe(
       (showHourlyBtn: boolean) => (this.showHourlyBtn = showHourlyBtn)
     );

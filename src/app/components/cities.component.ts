@@ -36,7 +36,6 @@ import { WeatherService } from '../services/weather.service';
         border: none;
         border-radius: 50px;
         background: #00000030;
-        color: white;
         padding: 10px 20px;
         outline: none;
         font-size: 1.03rem;

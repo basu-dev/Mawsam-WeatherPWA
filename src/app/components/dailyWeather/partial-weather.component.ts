@@ -63,16 +63,28 @@ import { DailyWeather } from 'src/app/model/weather';
         border-radius: 10px 10px 0 0;
         width: 100%;
       }
+      .weather-detail::before{
+        position :absolute;
+        top:0;
+        left: 0;
+        width:100%;
+        height:100%;
+        content:'';
+        background:var(--semilight-background);
+        z-index:-1;
+        border-radius:0 0 10px 10px;
+      }
       .weather-detail {
         margin: 0 0 5px 0;
         text-align: left;
         background: var(--light-background);
-        border-radius: 0 0 10px 10px;
+        border-radius:10px;
         padding: 10px;
         display: grid;
         width: 100%;
         grid-template-columns: 3fr 2fr;
         grid-gap: 1rem;
+        position:relative;
       }
       .weather-detail small {
         font-size: 0.8rem;

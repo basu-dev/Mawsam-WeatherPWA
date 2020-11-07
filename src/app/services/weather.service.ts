@@ -4,17 +4,16 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, of, Subject } from 'rxjs';
 import { PartialWeather, OneWeather, Place } from '../model/weather';
+import helpers from './helpers';
 
 @Injectable({ providedIn: 'root' })
 export class WeatherService {
   APP_ID = environment.APP_ID;
-  weatherUrl = 'https://api.openweathermap.org/data/2.5/onecall';
-  // weatherUrl = 'http://localhost:3000/onekathmandu';
-  cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
-  currentWeatherUrl = 'https://api.openweathermap.org/data/2.5/weather';
-  // currentWeatherUrl = 'http://localhost:3000/thapathali';
+  weatherUrl = environment.weatherUrl;
+  currentWeatherUrl = environment.currentWeatherUrl;
   MY_API = environment.MY_API;
   POSITION_KEY = environment.POSITION_KEY;
+  cityUrl = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json';
   lat = null;
   lon = null;
   geoTaken = false;
@@ -87,6 +86,7 @@ export class WeatherService {
       });
   }
   public dispatchWeatherData(): void {
+    // console.log("dispatching");
     this.subject.next({ ...this.weatherData });
   }
   public getCurrentWeather(city: Place): Observable<PartialWeather> {
@@ -111,32 +111,10 @@ export class WeatherService {
       );
   }
   getTime(unixtime?: number): { time: string; day: string; date?: string } {
-    const a = unixtime > 0 ? new Date(unixtime * 1000) : new Date();
-    let hours = a.getHours();
-    let sit = 'AM';
-    if (hours >= 12) {
-      hours = hours - 12;
-      sit = 'PM';
-    }
-    const month = a.toString().split(' ')[1];
-    const day = a.getDate();
-    return {
-      time: `${hours}: ${a.getMinutes()} ${sit}`,
-      day: this.parseDay(a.getDay()),
-      date: `${month} ${day}`,
-    };
+    return  helpers.getTime(unixtime);
   }
   parseDay(day: number): string {
-    const days = {
-      0: 'Monday',
-      1: 'Tuesday',
-      2: 'Wednesday',
-      3: 'Thursday',
-      4: 'Friday',
-      5: 'Saturday',
-      6: 'Sunday',
-    };
-    return days[day];
+    return helpers.parseDay(day);
   }
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
