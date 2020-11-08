@@ -91,7 +91,8 @@ export class WeatherDetailComponent implements OnInit, OnDestroy {
         this.current = x.current;
         this.sunrise = this.weatherService.getTime(x.daily[0].sunrise).time;
         this.sunset = this.weatherService.getTime(x.daily[0].sunset).time;
-      }
+      },
+      (e: any) => console.log(e)
     );
 
     this.uiService.hourlyButtonSub.subscribe(

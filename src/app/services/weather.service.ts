@@ -1,9 +1,9 @@
 import { UIService } from './ui.service';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of, Subject, throwError } from 'rxjs';
 import { PartialWeather, OneWeather, Place } from '../model/weather';
 import helpers from './helpers';
 
@@ -59,7 +59,6 @@ export class WeatherService {
   // get weather
   get(city?: Place): void {
     this.ui.toggleLoading(true);
-    console.log(city);
     this.lat = city.lat;
     this.lon = city.lon;
     const result = this.httpClient
@@ -81,7 +80,7 @@ export class WeatherService {
           }
           return { ...x, timezone: `${city.name}` };
         }),
-        catchError(this.handleError<OneWeather>('get', {}))
+        catchError(this.handleError)
       )
       .subscribe((data) => {
         this.ui.toggleLoading(false);
@@ -119,17 +118,8 @@ export class WeatherService {
   parseDay(day: number): string {
     return helpers.parseDay(day);
   }
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      // this.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+  private handleError(e: HttpErrorResponse): any {
+      return throwError(e.error);
   }
   public addCity(city: Place): void {
     if (this.cityAlreadyAdded(city) === -1) {
