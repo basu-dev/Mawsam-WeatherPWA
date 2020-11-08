@@ -16,10 +16,17 @@
 .top span{
     display:none;
 }
-
+@media (min-width:768px){
+    app-weatherdetail{
+        display:none;
+    }
+}
 @media (max-width:768px){
     .top{
         text-align: center;
+    }
+    app-weatherdetail{
+        display:block;
     }
 }
 .top .name{

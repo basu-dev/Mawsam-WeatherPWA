@@ -94,11 +94,13 @@ export class WeatherDetailComponent implements OnInit, OnDestroy {
         this.sunset = this.weatherService.getTime(x.daily[0].sunset).time;
       }
     );
-    this.weatherService.dispatchWeatherData();
 
     this.uiService.hourlyButtonSub.subscribe(
       (showHourlyBtn: boolean) => (this.showHourlyBtn = showHourlyBtn)
     );
+    if (this.weatherService.weatherData) {
+      this.weatherService.dispatchWeatherData();
+    }
   }
   ngOnDestroy(): void {
     this.weatherSubscription.unsubscribe();

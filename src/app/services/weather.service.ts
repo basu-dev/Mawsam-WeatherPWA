@@ -28,11 +28,14 @@ export class WeatherService {
   // get current locations
   public getGeolocation(): void {
     if (!this.geoTaken && navigator.geolocation) {
+      console.log("hello");
       this.getPosition()
         .then((x) => {
+          console.log(x);
           this.get(x);
         })
         .catch((e) => {
+          console.log("e" ,e )
           this.get(e);
         });
     }
@@ -49,7 +52,7 @@ export class WeatherService {
           });
         },
         (err) => {
-          console.log(err);
+          console.log("Error");
           resolve({ lon: 27.71, lat: 85.31, name: 'Your Location' });
         }
       );
@@ -57,6 +60,7 @@ export class WeatherService {
   }
   // get weather
   get(city?: Place): void {
+    console.log(city);
     this.lat = city.lat;
     this.lon = city.lon;
     const result = this.httpClient
