@@ -6,11 +6,11 @@ import { Routes, RouterModule } from '@angular/router';
 import { HourlyWeatherComponent } from './hourly-weather.component';
 const routes: Routes = [
   {
-    path: 'forecast/daily',
+    path: 'daily',
     component: DailyWeatherComponent,
   },
   {
-    path: 'forecast/hourly',
+    path: 'hourly',
     component: HourlyWeatherComponent,
   },
 ];

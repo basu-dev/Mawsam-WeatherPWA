@@ -11,10 +11,11 @@
     --light-background:#00000033;
     --semilight-background:#00000077;
     --color: white;
+    --app-background:#539edc;
 }
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    background: #539edc; /* Old browsers */
+    background: var(--app-background);
     color: var(--color);
     overflow-y: scroll;
 }
@@ -35,7 +36,7 @@ body{
     margin:0;
     cursor: pointer;
     text-decoration: none;
-    padding:15px 50px;
+    padding:15px 70px;
     color: var(--color);
     
 } 
@@ -43,41 +44,81 @@ app-root{
     display:grid;
     grid-template-columns: 4fr 0fr 5fr 4fr;
 }
-
+.loadingview{
+    display:flex;
+    height:100vh;
+    justify-content: center;
+    align-items:center;
+    position:fixed;
+    width:100vw;
+}
+.loader {
+  
+    display: flex;
+  }
+  .loader span {
+    margin: 5px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    opacity: 0;
+    background: rgba(255, 255, 255, 0.735);
+    animation: animate ease-in-out 1.5s infinite;
+    animation-delay: calc(var(--j) * 0.29s);
+  }
+  @keyframes animate {
+    0% {
+      transform: scale(0.1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.1);
+      opacity: 1;
+      border-radius: 50px;
+    }
+    100% {
+      transform: scale(0.1);
+      opacity: 0.3;
+      box-shadow: 0 0 0 0px rgba(255, 255, 255, 0.456);
+    }
+  }
 app-cities{
     padding:10px;
     text-align: center;
     height: 100vh;
     overflow:scroll;
 }
+/* app-partialweather{
+    padding:0
+} */
 @media (max-width:768px){
    app-root{
        grid-template-columns: 1fr;
        overflow:scroll;
        flex-wrap: wrap;
    }
-   app-cities{
-       height:auto;
-       margin-top:-10px;
-       padding: 0 10px;
-       overflow: visible;
-   }
-   app-cities h4{
-        display:none;
-   }
+    app-cities{
+    transition:left .3s ease-in-out;
+    padding:10px;
+    position:fixed;
+    height:100vh;
+    width:80vw;
+    left:-100%;
+    background:var(--app-background);
+    z-index: 5;
+    box-shadow:0px -6px 20px 5px #00000045;
+}
    app-weather{
        height: auto;
    }
 }
-
 app-weatherdetail{
     padding:10px;
     text-align: center;
 }
-
 ng-component{
     text-align: center;
-    padding-top: 10px;
+    padding: 10px 5px;
     height: 100vh;
     overflow-y: scroll;
 }

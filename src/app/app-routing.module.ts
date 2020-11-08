@@ -8,17 +8,13 @@ const routes: Routes = [
     path: '',
     component: WeatherComponent,
   },
-  // {
-  //   path: 'forecast',
-  //   loadChildren: () =>
-  //     import('./components/dailyWeather/daily-weather.module').then(
-  //       (m) => m.DailyWeatherModule
-  //     ),
-  // },
-  // {
-  //   path:'forecaset',
-  //   component:
-  // }
+  {
+    path: 'forecast',
+    loadChildren: () =>
+      import('./components/dailyWeather/daily-weather.module').then(
+        (m) => m.DailyWeatherModule
+      ),
+  }
 ];
 
 @NgModule({

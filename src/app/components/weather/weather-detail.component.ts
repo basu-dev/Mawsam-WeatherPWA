@@ -44,7 +44,7 @@ import { WeatherService } from '../../services/weather.service';
           <div class="info">{{ current.visibility }}m</div>
         </div>
       </div>
-      <div *ngIf="showHourlyBtn" class="forecast-btn-place">
+      <div *ngIf="current && showHourlyBtn" class="forecast-btn-place">
         <a class="weekly-forecast-btn" routerLink="forecast/hourly"
           >Hourly Forecast</a
         >
@@ -88,7 +88,6 @@ export class WeatherDetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.weatherSubscription = this.weatherService.subject.subscribe(
       (x: OneWeather) => {
-        console.log("x",x);
         this.current = x.current;
         this.sunrise = this.weatherService.getTime(x.daily[0].sunrise).time;
         this.sunset = this.weatherService.getTime(x.daily[0].sunset).time;

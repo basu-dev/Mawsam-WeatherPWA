@@ -1,3 +1,4 @@
+import { UIService } from './ui.service';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -24,18 +25,16 @@ export class WeatherService {
   public cityUpdatedSub = new Subject<Place[]>();
   public selectedCities: Place[] = [];
 
-  constructor(public httpClient: HttpClient) {}
+  constructor(public httpClient: HttpClient, public ui: UIService) {}
   // get current locations
   public getGeolocation(): void {
     if (!this.geoTaken && navigator.geolocation) {
-      console.log("hello");
       this.getPosition()
         .then((x) => {
           console.log(x);
           this.get(x);
         })
         .catch((e) => {
-          console.log("e" ,e )
           this.get(e);
         });
     }
@@ -52,14 +51,14 @@ export class WeatherService {
           });
         },
         (err) => {
-          console.log("Error");
-          resolve({ lon: 27.71, lat: 85.31, name: 'Your Location' });
+          alert('Error taking the location info');
         }
       );
     });
   }
   // get weather
   get(city?: Place): void {
+    this.ui.toggleLoading(true);
     console.log(city);
     this.lat = city.lat;
     this.lon = city.lon;
@@ -85,12 +84,12 @@ export class WeatherService {
         catchError(this.handleError<OneWeather>('get', {}))
       )
       .subscribe((data) => {
+        this.ui.toggleLoading(false);
         this.weatherData = data;
         this.dispatchWeatherData();
       });
   }
   public dispatchWeatherData(): void {
-    // console.log("dispatching");
     this.subject.next({ ...this.weatherData });
   }
   public getCurrentWeather(city: Place): Observable<PartialWeather> {

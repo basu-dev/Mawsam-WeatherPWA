@@ -1,7 +1,8 @@
 {
   "name": "Mawsam",
   "short_name": "Mawsam",
-  "theme_color": "#35a9de",
+  "theme_color": "#539edc",
+  "description": "Full Featured Weather App",
   "background_color": "#f0f0f0",
   "display": "standalone",
   "scope": "./",
@@ -10,12 +11,6 @@
     {
       "src": "assets/icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "assets/icons/icon-96x96.png",
-      "sizes": "96x96",
       "type": "image/png",
       "purpose": "maskable any"
     },
@@ -32,20 +27,8 @@
       "purpose": "maskable any"
     },
     {
-      "src": "assets/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
       "src": "assets/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable any"
-    },
-    {
-      "src": "assets/icons/icon-384x384.png",
-      "sizes": "384x384",
       "type": "image/png",
       "purpose": "maskable any"
     },

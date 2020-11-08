@@ -1,3 +1,4 @@
+import { UIService } from './../services/ui.service';
 import { Subscription } from 'rxjs';
 import {
   Component,
@@ -39,6 +40,8 @@ import { WeatherService } from '../services/weather.service';
         padding: 10px 20px;
         outline: none;
         font-size: 1.03rem;
+        color:white;
+        letter-spacing:1px;
       }
       input::placeholder {
         color: #ffffffa3;
@@ -55,7 +58,7 @@ export class CityComponent implements AfterViewInit, OnInit {
   queryWait: boolean;
   public citiesSub: Subscription;
   public cities: Place[];
-  constructor(public service: WeatherService) {}
+  constructor(public service: WeatherService, public ui: UIService) {}
   ngOnInit(): void {
     this.citiesSub = this.service.cityUpdatedSub.subscribe(
       (cities: Place[]) => {
@@ -69,6 +72,7 @@ export class CityComponent implements AfterViewInit, OnInit {
   }
   loadWeather(city: Place): void {
     this.service.citySub.next({ ...city });
+    this.ui.toggleSidebar(false);
   }
   private getPlaceAutocomplete(): void {
     const autocomplete = new google.maps.places.Autocomplete(
@@ -100,6 +104,8 @@ export class CityComponent implements AfterViewInit, OnInit {
           temp: { min_temp: 0, max_temp: 0, current: 0 },
         };
         this.service.citySub.next({ ...a });
+        this.ui.toggleSidebar(false);
+
       } else {
         console.log(
           'Geocode was not successful for the following reason: ' + status

@@ -3,9 +3,8 @@ import { WeatherService } from 'src/app/services/weather.service';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { DailyWeather } from 'src/app/model/weather';
 @Component({
-  selector: 'app-onedayweather',
+  selector: 'app-partialweather',
   template: `
-    <div>
       <div *ngIf="current" class="day">
         {{ time }} <span>{{ date.day }}</span>
       </div>
@@ -48,7 +47,7 @@ import { DailyWeather } from 'src/app/model/weather';
           <div class="info">{{ current.pressure }}hPa</div>
         </div>
       </div>
-    </div>
+    
   `,
   styles: [
     `

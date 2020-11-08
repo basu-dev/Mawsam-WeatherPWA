@@ -1,4 +1,3 @@
-import { DailyWeatherModule } from './components/dailyWeather/daily-weather.module';
 import { WeatherDetailComponent } from './components/weather/weather-detail.component';
 import { SideBarDirective } from './directives/sidebar.directive';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,7 +26,6 @@ import { CityComponent } from './components/cities.component';
   ],
   imports: [
     BrowserModule,
-    DailyWeatherModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,

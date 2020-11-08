@@ -81,8 +81,8 @@ export class WeatherComponent implements OnInit, OnDestroy {
     this.cityDetail.added = false;
     this.weatherService.removeCity({ ...this.cityDetail });
   }
-  openSidebar(): void {
-    this.uiSerivce.sideBarSub.next({ open: true });
+  toggleSidebar(): void {
+    this.uiSerivce.toggleSidebar();
   }
   ngOnDestroy(): void {
     this.sub.unsubscribe();

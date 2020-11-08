@@ -1,6 +1,5 @@
-<div class="weather-component" *ngIf="weather; else elseBlock">
+<div class="weather-component" *ngIf="weather">
     <div class="top">
-        <!-- <span (click) = (openSidebar())>+</span> -->
         <div class="name"><h3>{{city}}<br>
             <p>{{time.time}}</p><p>{{time.day}}</p></h3>
             <div *ngIf="!cityDetail.added;else tickBlock" (click)="addCity()" class="plus-button"></div>
@@ -8,9 +7,11 @@
                 <div class="success-checkmark" (click) = "removeCity()"></div>
             </ng-template>
         </div>
-        <!-- <span>..</span> -->
+        <span class='search' (click) = (toggleSidebar())><img *ngIf="!uiSerivce.sideBarOpened;else cross"  src="../../../assets/icons/search.svg"></span>
     </div>
-
+<ng-template #cross>
+    <img height="20"  src="../../../assets/icons/cross.svg">
+</ng-template>
     <div class="first-page">
         <div class="temp">
             <img src='https://openweathermap.org/img/wn/{{todayIcon}}@2x.png'>
@@ -35,13 +36,3 @@
     </div>
 </div>
 <app-weatherdetail></app-weatherdetail>   
-
-    <ng-template #elseBlock>
-        <div class="loadingview">
-            <div class="loader">
-                <span style="--j:1"></span>
-                <span style="--j:2"></span>
-                <span style="--j:3"></span>
-            </div>
-        </div>
-    </ng-template>

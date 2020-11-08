@@ -7,11 +7,11 @@ import { WeatherService } from 'src/app/services/weather.service';
   template: ` <h4>
     1 Week Forecast
     </h4>
-      <br />
-      <app-onedayweather
+    <br>
+      <app-partialweather
         *ngFor="let item of dailyData | async"
         [current]="item"
-      ></app-onedayweather>`,
+      ></app-partialweather>`,
 })
 export class DailyWeatherComponent implements OnInit, OnDestroy {
   constructor(private weatherService: WeatherService) {}

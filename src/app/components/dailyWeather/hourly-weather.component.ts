@@ -7,11 +7,11 @@ import { WeatherService } from 'src/app/services/weather.service';
     Hourly Forecast
     </h4>
       <br />
-      <app-onedayweather
+      <app-partialweather
         *ngFor="let item of dailyData | async"
         [current]="item"
         unitWeatherType="hourly"
-      ></app-onedayweather>
+      ></app-partialweather>
     `,
 })
 export class HourlyWeatherComponent implements OnInit, OnDestroy {
@@ -21,7 +21,7 @@ export class HourlyWeatherComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.weatherSub = this.weatherService.subject.subscribe(
       (result: OneWeather) => {
-        this.dailyData = of(result.hourly.slice(1, 24));
+        this.dailyData = of(result.hourly.slice(1, 47));
       },
       (err) => console.log('Error in fetching data', err)
     );
