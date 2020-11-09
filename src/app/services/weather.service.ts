@@ -73,7 +73,6 @@ export class WeatherService {
       })
       .pipe(
         map((x: any) => {
-          console.log('Unprocessed Data: ', x);
           x.current.dt = this.getTime(x.current.dt);
           if (this.cityAlreadyAdded(city) > -1) {
             x.added = true;

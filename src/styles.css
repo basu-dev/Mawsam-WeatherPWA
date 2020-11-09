@@ -97,6 +97,9 @@ app-cities{
        overflow:scroll;
        flex-wrap: wrap;
    }
+   .weekly-forecast-btn{
+    padding:15px 100px;
+   }
     app-cities{
     transition:left .3s ease-in-out;
     padding:10px;
