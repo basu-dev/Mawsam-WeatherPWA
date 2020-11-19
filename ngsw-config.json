@@ -15,7 +15,8 @@
         ],
         "urls": [
           "https://fonts.googleapis.com/css2?family=Big+Shoulders+Text:wght@100&display=swap",
-          "https://fonts.gstatic.com/**"
+          "https://fonts.gstatic.com/**",
+          "https://openweathermap.org/img/**"
         ]
       }
     },

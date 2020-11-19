@@ -5,49 +5,47 @@ import { DailyWeather } from 'src/app/model/weather';
 @Component({
   selector: 'app-partialweather',
   template: `
-      <div *ngIf="current" class="day">
-        {{ time }} <span>{{ date.day }}</span>
+    <div *ngIf="current" class="day">
+      {{ time }} <span>{{ date.day }}</span>
+    </div>
+    <div *ngIf="current" class="weather-detail">
+      <div>
+        <small>Weather</small>
+        <div class="info">{{ current.weather[0].main }}</div>
       </div>
-      <div *ngIf="current" class="weather-detail">
-        <div>
-          <small>Weather</small>
-          <div class="info">{{ current.weather[0].main }}</div>
+      <div>
+        <small>Temperature</small>
+        <div class="info">
+          <span *ngIf="isHourly; else hourly">{{ temperature }}</span
+          ><span *ngIf="isHourly">&deg;C</span>
         </div>
-        <div>
-          <small>Temperature</small>
-          <div class="info">
-            <span *ngIf="isHourly; else hourly">{{ temperature }}</span
-            ><span *ngIf="isHourly">&deg;C</span>
-          </div>
-          <ng-template #hourly
-            >{{ temperature.min }}&deg; /
-            {{ temperature.max }}&deg;</ng-template
-          >
-        </div>
-        <div>
-          <small>Feels Like</small>
-          <div class="info">
-            <span *ngIf="isHourly; else hourly">{{ feelsLike }}</span
-            ><span *ngIf="isHourly">&deg;C</span>
-          </div>
-          <ng-template #hourly
-            >{{ feelsLike.min }}&deg; / {{ feelsLike.max }}&deg;</ng-template
-          >
-        </div>
-        <div>
-          <small>Humidity</small>
-          <div class="info">{{ current.humidity }}%</div>
-        </div>
-        <div>
-          <small>Wind Speed</small>
-          <div class="info">{{ current.wind_speed }} km/h</div>
-        </div>
-        <div>
-          <small>Pressure</small>
-          <div class="info">{{ current.pressure }}hPa</div>
-        </div>
+        <ng-template #hourly
+          >{{ temperature.min }}&deg; / {{ temperature.max }}&deg;</ng-template
+        >
       </div>
-    
+      <div>
+        <small>Feels Like</small>
+        <div class="info">
+          <span *ngIf="isHourly; else hourly">{{ feelsLike }}</span
+          ><span *ngIf="isHourly">&deg;C</span>
+        </div>
+        <ng-template #hourly
+          >{{ feelsLike.min }}&deg; / {{ feelsLike.max }}&deg;</ng-template
+        >
+      </div>
+      <div>
+        <small>Humidity</small>
+        <div class="info">{{ current.humidity }}%</div>
+      </div>
+      <div>
+        <small>Wind Speed</small>
+        <div class="info">{{ current.wind_speed }} km/h</div>
+      </div>
+      <div>
+        <small>Pressure</small>
+        <div class="info">{{ current.pressure }}hPa</div>
+      </div>
+    </div>
   `,
   styles: [
     `
@@ -62,28 +60,28 @@ import { DailyWeather } from 'src/app/model/weather';
         border-radius: 10px 10px 0 0;
         width: 100%;
       }
-      .weather-detail::before{
-        position :absolute;
-        top:0;
+      .weather-detail::before {
+        position: absolute;
+        top: 0;
         left: 0;
-        width:100%;
-        height:100%;
-        content:'';
-        background:var(--semilight-background);
-        z-index:-1;
-        border-radius:0 0 10px 10px;
+        width: 100%;
+        height: 100%;
+        content: '';
+        background: var(--semilight-background);
+        z-index: -1;
+        border-radius: 0 0 10px 10px;
       }
       .weather-detail {
         margin: 0 0 5px 0;
         text-align: left;
         background: var(--light-background);
-        border-radius:10px;
+        border-radius: 10px;
         padding: 10px;
         display: grid;
         width: 100%;
         grid-template-columns: 3fr 2fr;
         grid-gap: 1rem;
-        position:relative;
+        position: relative;
       }
       .weather-detail small {
         font-size: 0.8rem;

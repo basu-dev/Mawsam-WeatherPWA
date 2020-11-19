@@ -37,10 +37,6 @@ export class WeatherComponent implements OnInit, OnDestroy {
   public time: { time: string; day: string };
   public thirdDay: string;
   ngOnInit(): void {
-    // this line below is for offline testing should be removed whilest access to internet
-    // this.weatherService.get({ lat: 32.34, lon: 23.23, name: 'Location' });
-    // this.weatherService.dispatchWeatherData();
-
     this.citySubscripton = this.weatherService.citySub.subscribe(
       (x: Place): void => {
         if (x.lat) {

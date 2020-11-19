@@ -1,3 +1,4 @@
+import { AutoCompleteComponent } from './components/autocomplete.component';
 import { WeatherDetailComponent } from './components/weather/weather-detail.component';
 import { SideBarDirective } from './directives/sidebar.directive';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +23,7 @@ import { CityComponent } from './components/cities.component';
     CityDetailComponent,
     SideBarDirective,
     WeatherDetailComponent,
+    AutoCompleteComponent
 
   ],
   imports: [

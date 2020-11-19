@@ -28,6 +28,7 @@ export class WeatherService {
   constructor(public httpClient: HttpClient, public ui: UIService) {}
   // get current locations
   public getGeolocation(): void {
+    console.log('getgwoposionon')
     if (!this.geoTaken && navigator.geolocation) {
       this.getPosition()
         .then((x) => {
@@ -51,7 +52,14 @@ export class WeatherService {
           });
         },
         (err) => {
-          alert('Error taking the location info');
+          try{
+            let city = this.getDefaultCity();
+            console.log(city);
+            if(city.lat && city.lon && city.name){
+              this.get(city);
+            }
+          }
+          catch(_){ this.ui.showModal()}
         }
       );
     });
@@ -112,13 +120,13 @@ export class WeatherService {
       );
   }
   getTime(unixtime?: number): { time: string; day: string; date?: string } {
-    return  helpers.getTime(unixtime);
+    return helpers.getTime(unixtime);
   }
   parseDay(day: number): string {
     return helpers.parseDay(day);
   }
   private handleError(e: HttpErrorResponse): any {
-      return throwError(e.error);
+    return throwError(e.error);
   }
   public addCity(city: Place): void {
     if (this.cityAlreadyAdded(city) === -1) {
@@ -160,7 +168,7 @@ export class WeatherService {
     localStorage.setItem('default', JSON.stringify(val));
     return true;
   }
-  public getDefaultCity(): any {
+  public getDefaultCity(): Place {
     return JSON.parse(localStorage.getItem('default'));
   }
 }
