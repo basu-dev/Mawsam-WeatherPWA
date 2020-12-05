@@ -40,6 +40,7 @@ body{
     color: var(--color);
     
 } 
+
 app-root{
     display:grid;
     grid-template-columns: 4fr 0fr 5fr 4fr;
@@ -124,6 +125,29 @@ ng-component{
     padding: 10px 5px;
     height: 100vh;
     overflow-y: scroll;
+}
+.home{
+    outline: none;
+    border:none;
+    border-radius:50%;
+    padding:12px;
+    position:fixed;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    background-color: #427eb0;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0px 2px 20px 1px rgb(0, 0, 0);
+}
+.home:active{
+    box-shadow: none;
+}
+.home app-svghome{
+    height:35px;
+    width:35px;
 }
 /* 
 h1,h2,h3,h4,h5{

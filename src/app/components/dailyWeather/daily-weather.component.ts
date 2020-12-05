@@ -11,7 +11,11 @@ import { WeatherService } from 'src/app/services/weather.service';
       <app-partialweather
         *ngFor="let item of dailyData | async"
         [current]="item"
-      ></app-partialweather>`,
+      ></app-partialweather>
+      <button class='home'routerLink='/' >
+      <app-svghome></app-svghome>
+      </button>
+      `,
 })
 export class DailyWeatherComponent implements OnInit, OnDestroy {
   constructor(private weatherService: WeatherService) {}

@@ -1,3 +1,4 @@
+import { SvgComponent } from './home-svg.component';
 import { OneDayWeatherComponent } from './partial-weather.component';
 import { DailyWeatherComponent } from './daily-weather.component';
 import { NgModule } from '@angular/core';
@@ -19,6 +20,7 @@ const routes: Routes = [
     DailyWeatherComponent,
     OneDayWeatherComponent,
     HourlyWeatherComponent,
+    SvgComponent,
   ],
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule, OneDayWeatherComponent],

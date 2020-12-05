@@ -12,6 +12,9 @@ import { WeatherService } from 'src/app/services/weather.service';
         [current]="item"
         unitWeatherType="hourly"
       ></app-partialweather>
+      <button class='home'routerLink='/' >
+      <app-svghome></app-svghome>
+        </button>
     `,
 })
 export class HourlyWeatherComponent implements OnInit, OnDestroy {
