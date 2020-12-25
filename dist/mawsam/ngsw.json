@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1608913349066,
+  "timestamp": 1608914355762,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,14 +11,14 @@
         "ignoreVary": true
       },
       "urls": [
-        "/4.997e2ba71f65909efb3e.js",
+        "/4.5397b8a2e0f4f2803bab.js",
         "/favicon.ico",
         "/index.html",
-        "/main.aac40c1b136fc73c461d.js",
+        "/main.00baeb929888a3d629e6.js",
         "/manifest.webmanifest",
         "/polyfills.35a5ca1855eb057f016a.js",
-        "/runtime.ec8f47a70ec10743729f.js",
-        "/styles.3b42eae9dfece235722c.css"
+        "/runtime.9ceb4ff3902e339c1372.js",
+        "/styles.6ce878fa5b97ab01d008.css"
       ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/css2\\?family=Big\\+Shoulders\\+Text:wght@100&display=swap",
@@ -67,7 +67,7 @@
     }
   ],
   "hashTable": {
-    "/4.997e2ba71f65909efb3e.js": "c40bd7b407157931293624cfc365f486c083979c",
+    "/4.5397b8a2e0f4f2803bab.js": "2aeac21ca78f969b17abda9d24b446ca09e3d675",
     "/assets/icons/cross.svg": "f5adab735ca1f1434cf6a85fe010ac563e1d38d3",
     "/assets/icons/home.svg": "1a36569c194ddc695ae43c614419e19565b49456",
     "/assets/icons/icon-128x128.png": "935afc6c98fc9818e2a417c81281caed611eadb5",
@@ -80,12 +80,12 @@
     "/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "/assets/icons/search.svg": "2ad785868a3ed80a633a235abe54e97340946eb4",
     "/favicon.ico": "f936f4169d52a070839bfcc5e9ae7e8c6b097f5d",
-    "/index.html": "a4ba55ee2754c8ef280bbf6792cedbc0d0d9fe12",
-    "/main.aac40c1b136fc73c461d.js": "6b69a8751e930eef34238bb81a523eeebd0958a5",
+    "/index.html": "f6bde656f7becbbe6d60c5d7a5de4d6b808c4812",
+    "/main.00baeb929888a3d629e6.js": "a671bac083f0e9ea0dd612b41573f621faa3a687",
     "/manifest.webmanifest": "e321c0d1171d2b1c091c0064b1ad8de8b53aa68a",
     "/polyfills.35a5ca1855eb057f016a.js": "578360d24ce37383f261c7ef63b1f822d28e8dde",
-    "/runtime.ec8f47a70ec10743729f.js": "4fdc8f875de8f0164ff4758cdb495cde03201841",
-    "/styles.3b42eae9dfece235722c.css": "cc65fdbd502e58aad8ad77ea0d37f77563b2a002"
+    "/runtime.9ceb4ff3902e339c1372.js": "bc202e61ccf2f2f91d32f512d0a4714c236425e8",
+    "/styles.6ce878fa5b97ab01d008.css": "272a12416781c88aafc3141fe710c939d660caf8"
   },
   "navigationUrls": [
     {

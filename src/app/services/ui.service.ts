@@ -6,6 +6,7 @@ export class UIService {
   constructor() {}
   public sideBarOpened = false;
   public loading = true;
+  public isBrowserMode = true;
   public sideBarSub = new Subject<boolean>();
   public loadingSub = new Subject<boolean>();
   public hourlyButtonSub = new Subject<boolean>();

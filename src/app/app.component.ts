@@ -62,10 +62,10 @@ export class AppComponent implements OnInit {
   showAutoComplete = false;
   ngOnInit(): void {
     if (window.matchMedia('(display-mode: standalone)').matches) {
-      console.log("This is running as standalone.");
+      this.ui.isBrowserMode=false;
     }
     else{
-      console.log("Browser Mode")
+      this.ui.isBrowserMode=true;
     }
     if (environment.production) {
       this.service.getGeolocation();

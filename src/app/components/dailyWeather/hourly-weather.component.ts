@@ -1,3 +1,4 @@
+import { UIService } from './../../services/ui.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable, of } from 'rxjs';
 import { DailyWeather, OneWeather } from 'src/app/model/weather';
@@ -12,13 +13,15 @@ import { WeatherService } from 'src/app/services/weather.service';
         [current]="item"
         unitWeatherType="hourly"
       ></app-partialweather>
-      <button class='home'routerLink='/' >
+      <button *ngIf='!this.ui.isBrowserMode' class='home'routerLink='/' >
       <app-svghome></app-svghome>
         </button>
     `,
 })
 export class HourlyWeatherComponent implements OnInit, OnDestroy {
-  constructor(private weatherService: WeatherService) {}
+  constructor(private weatherService: WeatherService,
+    public ui: UIService
+    ) {}
   private weatherSub: Subscription;
   public dailyData: Observable<DailyWeather[]>;
   ngOnInit(): void {
