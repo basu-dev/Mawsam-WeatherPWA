@@ -6,6 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { WeatherService } from './services/weather.service';
+import { SwPush } from '@angular/service-worker';
 
 
 @Component({
@@ -56,11 +57,16 @@ import { WeatherService } from './services/weather.service';
   ],
 })
 export class AppComponent implements OnInit {
-  constructor(private service: WeatherService, public ui: UIService) {}
+  constructor(private service: WeatherService,
+     public ui: UIService,
+     private swPush: SwPush
+     ) {}
   public title = 'Mawsam | Weather';
+  private readonly publicKey = "BANj60N_R98P4eWU_G2WgM83M6s_ICURjYBsfYRNVZZxmtQXWh0gZcIY0JGs1CCKmR8DM2K8n_BRJStCEhVypLc";
   public openSidebar: boolean;
   showAutoComplete = false;
   ngOnInit(): void {
+    
     if (window.matchMedia('(display-mode: standalone)').matches) {
       this.ui.isBrowserMode=false;
     }
@@ -79,5 +85,12 @@ export class AppComponent implements OnInit {
     this.ui.sideBarSub.subscribe((x) => {
       this.openSidebar = x;
     });
+    //For Push Notification
+    this.pushSubscription();
   }
+      pushSubscription():void{
+  if(this.swPush.isEnabled){
+    this.swPush.requestSubscription({serverPublicKey:this.publicKey}).then(sub=>console.log).catch(console.error)
+  }
+      }
 }
