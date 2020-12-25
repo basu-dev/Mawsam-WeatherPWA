@@ -28,11 +28,9 @@ export class WeatherService {
   constructor(public httpClient: HttpClient, public ui: UIService) {}
   // get current locations
   public getGeolocation(): void {
-    console.log('getgwoposionon')
     if (!this.geoTaken && navigator.geolocation) {
       this.getPosition()
         .then((x) => {
-          console.log(x);
           this.get(x);
         })
         .catch((e) => {
@@ -44,7 +42,6 @@ export class WeatherService {
     return new Promise((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (resp) => {
-          console.log('success');
           resolve({
             lon: resp.coords.longitude,
             lat: resp.coords.latitude,
@@ -54,12 +51,11 @@ export class WeatherService {
         (err) => {
           try{
             let city = this.getDefaultCity();
-            console.log(city);
             if(city.lat && city.lon && city.name){
               this.get(city);
             }
           }
-          catch(_){ this.ui.showModal()}
+          catch(_){ this.ui.showModal() }
         }
       );
     });

@@ -93,6 +93,9 @@ app-cities{
     padding:0
 } */
 @media (max-width:768px){
+    .home{
+        display:none !important;
+    }
    app-root{
        grid-template-columns: 1fr;
        overflow:scroll;

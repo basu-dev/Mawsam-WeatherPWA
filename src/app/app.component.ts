@@ -61,6 +61,12 @@ export class AppComponent implements OnInit {
   public openSidebar: boolean;
   showAutoComplete = false;
   ngOnInit(): void {
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      console.log("This is running as standalone.");
+    }
+    else{
+      console.log("Browser Mode")
+    }
     if (environment.production) {
       this.service.getGeolocation();
     } else {
