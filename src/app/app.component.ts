@@ -1,31 +1,27 @@
-
+import { NotificationService } from './services/notification.service';
 import { environment } from './../environments/environment';
 import { UIService } from './services/ui.service';
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
-import { SwPush } from '@angular/service-worker';
-
 
 @Component({
   selector: 'app-root',
   template: `
     <div class="shadow" *ngIf="showAutoComplete">
-      You have not enabled Location Service. Either enable it and Reload or enter your default location.
-      <app-autocomplete type = 'appcomponent'></app-autocomplete>
+      You have not enabled Location Service. Either enable it and Reload or
+      enter your default location.
+      <app-autocomplete type="appcomponent"></app-autocomplete>
     </div>
     <app-cities [style.left]="openSidebar ? '0' : '-100%'"></app-cities>
     <router-outlet #outlet></router-outlet>
-    <app-weatherdetail type='appcomponent' ></app-weatherdetail>
-        <div *ngIf="ui.loading" class="loadingview">
-            <div class="loader">
-                <span style="--j:1"></span>
-                <span style="--j:2"></span>
-                <span style="--j:3"></span>
-            </div>
-        </div>
+    <app-weatherdetail type="appcomponent"></app-weatherdetail>
+    <div *ngIf="ui.loading" class="loadingview">
+      <div class="loader">
+        <span style="--j:1"></span>
+        <span style="--j:2"></span>
+        <span style="--j:3"></span>
+      </div>
+    </div>
   `,
   styles: [
     `
@@ -34,63 +30,59 @@ import { SwPush } from '@angular/service-worker';
           display: none;
         }
       }
-      app-autocomplete{
-        position:fixed;
-        height:200px;
-        width:300px;
-        box-shadow:1000px 1000px 5px grey;
-        z-index:10;
+      app-autocomplete {
+        position: fixed;
+        height: 200px;
+        width: 300px;
+        box-shadow: 1000px 1000px 5px grey;
+        z-index: 10;
       }
-      .shadow{
-        position:fixed;
+      .shadow {
+        position: fixed;
         /* display:none; */
-        height:100vh;
-        width:100vw;
-        background:#000000c3;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        z-index:9;
-        text-align:center;
+        height: 100vh;
+        width: 100vw;
+        background: #000000c3;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9;
+        text-align: center;
       }
     `,
   ],
 })
 export class AppComponent implements OnInit {
-  constructor(private service: WeatherService,
-     public ui: UIService,
-     private swPush: SwPush
-     ) {}
+  constructor(
+    private service: WeatherService,
+    public ui: UIService,
+    public notifService: NotificationService
+  ) {}
   public title = 'Mawsam | Weather';
-  private readonly publicKey = "BANj60N_R98P4eWU_G2WgM83M6s_ICURjYBsfYRNVZZxmtQXWh0gZcIY0JGs1CCKmR8DM2K8n_BRJStCEhVypLc";
+  
   public openSidebar: boolean;
   showAutoComplete = false;
   ngOnInit(): void {
-    
     if (window.matchMedia('(display-mode: standalone)').matches) {
-      this.ui.isBrowserMode=false;
-    }
-    else{
-      this.ui.isBrowserMode=true;
+      this.ui.isBrowserMode = false;
+    } else {
+      this.ui.isBrowserMode = true;
     }
     if (environment.production) {
       this.service.getGeolocation();
     } else {
       this.service.getGeolocation();
     }
-    this.ui.defaultLocationModalSub.subscribe(
-      (truth) => { console.log(truth); this.showAutoComplete = truth ;}
-    );
+    this.ui.defaultLocationModalSub.subscribe((truth) => {
+      console.log(truth);
+      this.showAutoComplete = truth;
+    });
     this.service.getCities();
     this.ui.sideBarSub.subscribe((x) => {
       this.openSidebar = x;
     });
     //For Push Notification
-    this.pushSubscription();
+    this.notifService.pushSubscription();
   }
-      pushSubscription():void{
-  if(this.swPush.isEnabled){
-    this.swPush.requestSubscription({serverPublicKey:this.publicKey}).then(sub=>console.log).catch(console.error)
-  }
-      }
+ 
 }
