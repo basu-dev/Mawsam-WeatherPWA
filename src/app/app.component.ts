@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
       this.openSidebar = x;
     });
     //For Push Notification
-    setTimeout(_=>this.notifService.showDialog(),5000);
+    setTimeout(_=>this.notifService.showDialog(),10000);
   }
  
  
