@@ -66,8 +66,10 @@ export class AppComponent implements OnInit {
   public openSidebar: boolean;
   showAutoComplete = false;
   ngOnInit(): void {
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      this.ui.isBrowserMode = false;
+    
+    if (window.matchMedia('(display-mode: standalone)').matches && navigator.userAgent.indexOf('Android')== -1) {
+        this.ui.isBrowserMode = false;
+      
     } else {
       this.ui.isBrowserMode = true;
     }
