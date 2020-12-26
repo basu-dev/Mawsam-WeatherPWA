@@ -13,6 +13,7 @@ import { environment } from '../environments/environment';
 import { CityDetailComponent } from './components/city-detail.component';
 import { WeatherComponent } from './components/weather/weather.component';
 import { CityComponent } from './components/cities.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { CityComponent } from './components/cities.component';
     CityDetailComponent,
     SideBarDirective,
     WeatherDetailComponent,
-    AutoCompleteComponent
+    AutoCompleteComponent,
+    ModalComponent
 
   ],
   imports: [

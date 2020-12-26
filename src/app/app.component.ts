@@ -3,10 +3,12 @@ import { environment } from './../environments/environment';
 import { UIService } from './services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
+import { ModalService } from './components/modal/modal.service';
 
 @Component({
   selector: 'app-root',
   template: `
+  <app-modal></app-modal>
     <div class="shadow" *ngIf="showAutoComplete">
       You have not enabled Location Service. Either enable it and Reload or
       enter your default location.
@@ -56,7 +58,8 @@ export class AppComponent implements OnInit {
   constructor(
     private service: WeatherService,
     public ui: UIService,
-    public notifService: NotificationService
+    public notifService: NotificationService,
+    public modalService:ModalService
   ) {}
   public title = 'Mawsam | Weather';
   
@@ -82,7 +85,8 @@ export class AppComponent implements OnInit {
       this.openSidebar = x;
     });
     //For Push Notification
-    this.notifService.pushSubscription();
+    setTimeout(_=>this.notifService.showDialog(),5000);
   }
+ 
  
 }

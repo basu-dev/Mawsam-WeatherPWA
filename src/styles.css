@@ -152,6 +152,10 @@ ng-component{
     height:35px;
     width:35px;
 }
+app-modal{
+    position: fixed;
+    z-index: 1000;
+}
 /* 
 h1,h2,h3,h4,h5{
     font-family: var(--secondary-font);
