@@ -25,6 +25,7 @@ import { SwPush, SwUpdate } from '@angular/service-worker';
         <span style="--j:3"></span>
       </div>
     </div>
+    <div>hello</div>
   `,
   styles: [
     `

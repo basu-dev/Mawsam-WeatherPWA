@@ -2,7 +2,6 @@ importScripts('./ngsw-worker.js');
 
 (function () {
     'use strict';
-    console.log("laksdjf")
     self.addEventListener('notificationclick', (event) => {
         console.log("This is custom service worker notificationclick method.");
         console.log('Notification details: ', event.notification);
