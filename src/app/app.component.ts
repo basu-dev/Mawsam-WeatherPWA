@@ -4,7 +4,7 @@ import { UIService } from './services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
 import { ModalService } from './components/modal/modal.service';
-import { SwPush } from '@angular/service-worker';
+import { SwPush, SwUpdate } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
     public ui: UIService,
     public notifService: NotificationService,
     public modalService:ModalService,
-    private swPush:SwPush
+    private update:SwUpdate
   ) {}
   public title = 'Mawsam | Weather';
   
@@ -89,10 +89,16 @@ export class AppComponent implements OnInit {
     });
     //For Push Notification
     setTimeout(_=>this.notifService.showDialog(),10000);
-    this.swPush.notificationClicks.subscribe(({action,notification})=>{
-      window.open(notification.data.url);
-    })
+    this.updateClient()
   }
- 
+ updateClient():void{
+   if(!this.update.isEnabled){
+     return;
+   }else{
+     this.update.available.subscribe(_=>{
+       this.update.activateUpdate().then(_=>console.log("App Updated Successfully"));
+     })
+   }
+ }
  
 }
