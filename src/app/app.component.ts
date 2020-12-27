@@ -4,6 +4,7 @@ import { UIService } from './services/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from './services/weather.service';
 import { ModalService } from './components/modal/modal.service';
+import { SwPush } from '@angular/service-worker';
 
 @Component({
   selector: 'app-root',
@@ -59,7 +60,8 @@ export class AppComponent implements OnInit {
     private service: WeatherService,
     public ui: UIService,
     public notifService: NotificationService,
-    public modalService:ModalService
+    public modalService:ModalService,
+    private swPush:SwPush
   ) {}
   public title = 'Mawsam | Weather';
   
@@ -69,7 +71,6 @@ export class AppComponent implements OnInit {
     
     if (window.matchMedia('(display-mode: standalone)').matches && navigator.userAgent.indexOf('Android')== -1) {
         this.ui.isBrowserMode = false;
-      
     } else {
       this.ui.isBrowserMode = true;
     }
@@ -88,6 +89,9 @@ export class AppComponent implements OnInit {
     });
     //For Push Notification
     setTimeout(_=>this.notifService.showDialog(),10000);
+    this.swPush.notificationClicks.subscribe(({action,notification})=>{
+      window.open(notification.data.url);
+    })
   }
  
  

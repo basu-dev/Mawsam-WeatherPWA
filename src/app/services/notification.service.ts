@@ -21,6 +21,8 @@ export class NotificationService {
                 resolve(JSON.parse(localStorage.getItem('default')))
             }
             )
+            console.log("hello")
+
         })
     }
     async pushSubscription(): Promise<any> {
