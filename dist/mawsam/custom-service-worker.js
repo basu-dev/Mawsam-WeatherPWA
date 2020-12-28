@@ -1,4 +1,4 @@
-importScripts('./ngsw-worker.js');
+import('./ngsw-worker.js');
 
 (function () {
     'use strict';
