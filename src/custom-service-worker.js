@@ -1,7 +1,4 @@
-import './ngsw-worker.js';
-
-(function () {
-    'use strict';
+importScripts('./ngsw-worker.js');
     self.addEventListener('notificationclick', (event) => {
         console.log("This is custom service worker notificationclick method.");
         console.log('Notification details: ', event.notification);
@@ -9,5 +6,4 @@ import './ngsw-worker.js';
         if (clients.openWindow && event.notification.data.url) {
             event.waitUntil(clients.openWindow(event.notification.data.url));
         }
-    });}
-());
+    });
