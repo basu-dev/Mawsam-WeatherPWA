@@ -61,7 +61,8 @@ export class AppComponent implements OnInit {
     public ui: UIService,
     public notifService: NotificationService,
     public modalService:ModalService,
-    private update:SwUpdate
+    private update:SwUpdate,
+    private swPush:SwPush
   ) {}
   public title = 'Mawsam | Weather';
   
@@ -99,6 +100,11 @@ export class AppComponent implements OnInit {
        this.update.activateUpdate().then(_=>console.log("App Updated Successfully"));
      })
    }
+ }
+ notificationClick():any{
+   this.swPush.notificationClicks.subscribe(ev=>{
+     console.log(ev);
+   })
  }
  
 }
