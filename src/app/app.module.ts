@@ -26,14 +26,13 @@ import { ModalComponent } from './components/modal/modal.component';
     WeatherDetailComponent,
     AutoCompleteComponent,
     ModalComponent
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('custom-service-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
